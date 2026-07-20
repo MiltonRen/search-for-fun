@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://search-for-fun.local/schemas/node.schema.json",
+  "title": "Sealed node record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "id", "searchId", "parents", "generation", "edgeType", "searchRole", "lifecycleStatus", "objectiveRevision", "createdAt", "sealedAt", "title", "hypothesis", "changesFromParents", "preserve", "provenance", "runtime", "validation"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "id": { "type": "string", "pattern": "^n_[0-9]{4}_[a-z0-9_]+$" },
+    "searchId": { "type": "string", "pattern": "^s_[0-9]{8}_[a-z0-9_]+$" },
+    "parents": {
+      "type": "array",
+      "maxItems": 8,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^n_[0-9]{4}_[a-z0-9_]+$" }
+    },
+    "generation": { "type": "integer", "minimum": 0 },
+    "edgeType": { "enum": ["root", "refine", "branch", "leap", "crossover", "reframe", "art-study", "system-study"] },
+    "searchRole": { "enum": ["readable", "adjacent", "leap", "refinement", "crossover", "study"] },
+    "lifecycleStatus": { "const": "sealed" },
+    "objectiveRevision": { "type": "integer", "minimum": 1 },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "sealedAt": { "type": "string", "format": "date-time" },
+    "title": { "type": "string", "minLength": 1, "maxLength": 120 },
+    "hypothesis": { "type": "string", "minLength": 1, "maxLength": 1000 },
+    "changesFromParents": {
+      "type": "array",
+      "maxItems": 20,
+      "items": { "type": "string", "minLength": 1, "maxLength": 300 }
+    },
+    "preserve": {
+      "type": "array",
+      "maxItems": 20,
+      "items": { "type": "string", "minLength": 1, "maxLength": 300 }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["briefId", "report"],
+      "properties": {
+        "briefId": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "report": { "type": "string", "minLength": 1, "maxLength": 2000 }
+      }
+    },
+    "runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entry", "viewport", "orientation", "seed", "actions"],
+      "properties": {
+        "entry": { "const": "game/index.ts" },
+        "viewport": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["width", "height"],
+          "properties": {
+            "width": { "type": "integer", "minimum": 240, "maximum": 1920 },
+            "height": { "type": "integer", "minimum": 240, "maximum": 1920 }
+          }
+        },
+        "orientation": { "enum": ["landscape", "portrait"] },
+        "seed": { "type": "integer", "minimum": 0, "maximum": 2147483647 },
+        "actions": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "uniqueItems": true,
+          "items": { "enum": ["primary", "secondary", "left", "right", "up", "down", "pause", "restart"] }
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema", "typecheck", "bundle", "boot", "consoleErrors", "screenshot"],
+      "properties": {
+        "schema": { "const": "passed" },
+        "typecheck": { "const": "passed" },
+        "bundle": { "const": "passed" },
+        "boot": { "enum": ["pending", "passed", "failed"] },
+        "consoleErrors": { "type": "integer", "minimum": 0 },
+        "screenshot": { "enum": ["pending", "preview.png"] }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "edgeType": { "const": "root" } }, "required": ["edgeType"] },
+      "then": { "properties": { "parents": { "type": "array", "maxItems": 0 } } },
+      "else": { "properties": { "parents": { "type": "array", "minItems": 1 } } }
+    },
+    {
+      "if": { "properties": { "edgeType": { "const": "crossover" } }, "required": ["edgeType"] },
+      "then": { "properties": { "parents": { "type": "array", "minItems": 2 } } }
+    }
+  ]
+}

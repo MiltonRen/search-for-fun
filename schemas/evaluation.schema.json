@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://search-for-fun.local/schemas/evaluation.schema.json",
+  "title": "Evaluation record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "id", "type", "searchId", "nodeId", "objectiveRevision", "createdAt", "session", "ratings", "preserve", "change", "note"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "id": { "type": "string", "pattern": "^ev_[0-9TZ_-]+_[a-f0-9]{8}$" },
+    "type": { "enum": ["human_playtest", "behavioral", "technical", "agent_critique"] },
+    "searchId": { "type": "string", "pattern": "^s_[0-9]{8}_[a-z0-9_]+$" },
+    "nodeId": { "type": "string", "pattern": "^n_[0-9]{4}_[a-z0-9_]+$" },
+    "objectiveRevision": { "type": "integer", "minimum": 1 },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "session": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "durationSeconds", "restarts", "completed"],
+      "properties": {
+        "id": { "type": "string", "minLength": 8, "maxLength": 120 },
+        "durationSeconds": { "type": "number", "minimum": 0, "maximum": 86400 },
+        "restarts": { "type": "integer", "minimum": 0, "maximum": 10000 },
+        "completed": { "type": "boolean" }
+      }
+    },
+    "ratings": {
+      "type": "object",
+      "maxProperties": 20,
+      "propertyNames": { "pattern": "^[a-z][A-Za-z0-9]*$" },
+      "additionalProperties": {
+        "anyOf": [
+          { "type": "integer", "minimum": 1, "maximum": 5 },
+          { "type": "null" }
+        ]
+      }
+    },
+    "preserve": { "type": "string", "maxLength": 2000 },
+    "change": { "type": "string", "maxLength": 2000 },
+    "note": { "type": "string", "maxLength": 5000 },
+    "nextMove": { "type": "string", "maxLength": 1000 },
+    "telemetry": {
+      "type": "array",
+      "maxItems": 500,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "atMs"],
+        "properties": {
+          "name": { "type": "string", "pattern": "^[a-z][a-z0-9_]{0,63}$" },
+          "atMs": { "type": "number", "minimum": 0, "maximum": 86400000 },
+          "properties": { "type": "object", "maxProperties": 30 }
+        }
+      }
+    }
+  }
+}

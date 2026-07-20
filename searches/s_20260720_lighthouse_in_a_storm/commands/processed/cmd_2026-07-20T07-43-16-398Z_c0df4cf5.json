@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "cmd_2026-07-20T07-43-16-398Z_c0df4cf5",
+  "type": "cross",
+  "searchId": "s_20260720_lighthouse_in_a_storm",
+  "nodeIds": [
+    "n_0000_beam_rhythm",
+    "n_0001_keeper_s_choice"
+  ],
+  "mode": "crossover",
+  "instruction": "Preserve Beam Rhythm's legible timing window and Keeper's Choice's scarce shared power. Keep the result playable with one button in under one minute.",
+  "createdAt": "2026-07-20T07:43:16.398Z",
+  "createdBy": "studio",
+  "status": "processed",
+  "result": {
+    "completedAt": "2026-07-20T07:43:56.996Z",
+    "nodeIds": [
+      "n_0003_pulse_under_pressure"
+    ],
+    "summary": "Processed end to end: the crossover result combines a legible timing window with a failing shared beam resource."
+  }
+}

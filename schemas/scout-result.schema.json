@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://search-for-fun.local/schemas/scout-result.schema.json",
+  "title": "Scout result manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "briefId", "title", "hypothesis", "searchRole", "edgeType", "parents", "changesFromParents", "preserve", "report", "actions"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "briefId": { "type": "string", "minLength": 1, "maxLength": 120 },
+    "title": { "type": "string", "minLength": 1, "maxLength": 120 },
+    "hypothesis": { "type": "string", "minLength": 1, "maxLength": 1000 },
+    "searchRole": { "enum": ["readable", "adjacent", "leap", "refinement", "crossover", "study"] },
+    "edgeType": { "enum": ["root", "refine", "branch", "leap", "crossover", "reframe", "art-study", "system-study"] },
+    "parents": {
+      "type": "array",
+      "maxItems": 8,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^n_[0-9]{4}_[a-z0-9_]+$" }
+    },
+    "changesFromParents": {
+      "type": "array",
+      "maxItems": 20,
+      "items": { "type": "string", "minLength": 1, "maxLength": 300 }
+    },
+    "preserve": {
+      "type": "array",
+      "maxItems": 20,
+      "items": { "type": "string", "minLength": 1, "maxLength": 300 }
+    },
+    "report": { "type": "string", "minLength": 1, "maxLength": 2000 },
+    "actions": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 8,
+      "uniqueItems": true,
+      "items": { "enum": ["primary", "secondary", "left", "right", "up", "down", "pause", "restart"] }
+    },
+    "seed": { "type": "integer", "minimum": 0, "maximum": 2147483647 },
+    "viewport": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["width", "height"],
+      "properties": {
+        "width": { "type": "integer", "minimum": 240, "maximum": 1920 },
+        "height": { "type": "integer", "minimum": 240, "maximum": 1920 }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "edgeType": { "const": "root" } }, "required": ["edgeType"] },
+      "then": { "properties": { "parents": { "type": "array", "maxItems": 0 } } },
+      "else": { "properties": { "parents": { "type": "array", "minItems": 1 } } }
+    },
+    {
+      "if": { "properties": { "edgeType": { "const": "crossover" } }, "required": ["edgeType"] },
+      "then": { "properties": { "parents": { "type": "array", "minItems": 2 } } }
+    }
+  ]
+}

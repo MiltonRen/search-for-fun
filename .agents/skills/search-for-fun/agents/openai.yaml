@@ -1,0 +1,4 @@
+interface:
+  display_name: "Search for Fun"
+  short_description: "Explore playable game-design branches with Codex"
+  default_prompt: "Use $search-for-fun to start a wide-first search for a small playable game idea."

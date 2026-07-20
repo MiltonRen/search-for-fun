@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "id": "n_0001_keeper_s_choice",
+  "searchId": "s_20260720_lighthouse_in_a_storm",
+  "parents": [],
+  "generation": 0,
+  "edgeType": "root",
+  "searchRole": "adjacent",
+  "lifecycleStatus": "sealed",
+  "objectiveRevision": 1,
+  "createdAt": "2026-07-20T07:27:49.915Z",
+  "sealedAt": "2026-07-20T07:27:49.915Z",
+  "title": "Keeper's Choice",
+  "hypothesis": "Cycling one scarce power source between beam, warmth, and repairs creates meaningful tension with one button.",
+  "changesFromParents": [],
+  "preserve": [
+    "one-button input",
+    "visible lighthouse consequence",
+    "short survival session"
+  ],
+  "provenance": {
+    "briefId": "fixture-first-round-adjacent",
+    "report": "Tests strategic allocation and fantasy fit while deliberately accepting more information density than the readable branch."
+  },
+  "runtime": {
+    "entry": "game/index.ts",
+    "viewport": {
+      "width": 960,
+      "height": 540
+    },
+    "orientation": "landscape",
+    "seed": 41833,
+    "actions": [
+      "primary",
+      "restart"
+    ]
+  },
+  "validation": {
+    "schema": "passed",
+    "typecheck": "passed",
+    "bundle": "passed",
+    "boot": "passed",
+    "consoleErrors": 0,
+    "screenshot": "preview.png"
+  }
+}

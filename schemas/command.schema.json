@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://search-for-fun.local/schemas/command.schema.json",
+  "title": "Command record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "id", "type", "searchId", "nodeIds", "mode", "instruction", "createdAt", "createdBy", "status"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "id": { "type": "string", "pattern": "^cmd_[0-9TZ_-]+_[a-f0-9]{8}$" },
+    "type": { "enum": ["expand", "cross", "leap", "archive", "favorite", "reject", "select"] },
+    "searchId": { "type": "string", "pattern": "^s_[0-9]{8}_[a-z0-9_]+$" },
+    "nodeIds": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 8,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^n_[0-9]{4}_[a-z0-9_]+$" }
+    },
+    "mode": { "enum": ["single", "parallel", "crossover"] },
+    "instruction": { "type": "string", "maxLength": 4000 },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "createdBy": { "enum": ["studio", "codex"] },
+    "status": { "enum": ["pending", "processing", "processed", "error"] },
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["completedAt", "nodeIds", "summary"],
+      "properties": {
+        "completedAt": { "type": "string", "format": "date-time" },
+        "nodeIds": {
+          "type": "array",
+          "maxItems": 20,
+          "items": { "type": "string", "pattern": "^n_[0-9]{4}_[a-z0-9_]+$" }
+        },
+        "summary": { "type": "string", "minLength": 1, "maxLength": 4000 }
+      }
+    },
+    "error": { "type": "string", "minLength": 1, "maxLength": 4000 }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "type": { "const": "cross" } }, "required": ["type"] },
+      "then": {
+        "properties": {
+          "mode": { "const": "crossover" },
+          "nodeIds": { "type": "array", "minItems": 2 }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "status": { "const": "processed" } }, "required": ["status"] },
+      "then": {
+        "properties": { "result": {} },
+        "required": ["result"],
+        "not": { "type": "object", "properties": { "error": {} }, "required": ["error"] }
+      }
+    },
+    {
+      "if": { "properties": { "status": { "const": "error" } }, "required": ["status"] },
+      "then": {
+        "properties": { "error": {} },
+        "required": ["error"],
+        "not": { "type": "object", "properties": { "result": {} }, "required": ["result"] }
+      }
+    },
+    {
+      "if": {
+        "properties": { "status": { "enum": ["pending", "processing"] } },
+        "required": ["status"]
+      },
+      "then": {
+        "not": {
+          "anyOf": [
+            { "type": "object", "properties": { "result": {} }, "required": ["result"] },
+            { "type": "object", "properties": { "error": {} }, "required": ["error"] }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.search-for-fun/cache/
+.search-for-fun/locks/
+.search-for-fun/staging/
+*.log
+.DS_Store
+

@@ -2,10 +2,20 @@
 
 ## Local-first game design search with Codex!
 
-**Document status:** Working design, v0.1  
+**Document status:** Implemented local MVP, v1.0
 **Date:** 2026-07-18  
 **Working title:** Search-for-fun  
 **Primary implementation target:** OpenAI Build Week project
+
+---
+
+## 0. Implementation snapshot
+
+The local MVP described by this document is implemented in this repository. It includes the versioned file contract and JSON Schemas, atomic repository and command operations, a sandboxed host-owned KAPLAY runtime, the React exploration studio, the repo-local Codex skill and lifecycle scripts, automated unit and integration coverage, and a canonical four-node lighthouse search with captured browser previews and playtest evidence.
+
+The implemented first round treats the objective as the virtual graph root and creates three parentless playable root nodes: readable, adjacent, and leap. A later crossover node has both the readable and adjacent nodes as parents. This resolves earlier wording that implied a separate playable “root node.”
+
+Run `npm run check` for the complete automated verification pass and `npm run dev` to use the local studio at `http://127.0.0.1:4317`.
 
 ---
 
@@ -299,8 +309,8 @@ A small game team that wants designers, engineers, and artists to share an expli
 4. Invoke `$search-for-fun` with an idea.
 5. The skill verifies the repository and runtime.
 6. The skill conducts a short objective interview.
-7. The first search and root node are created.
-8. Three scouts build the first playable alternatives.
+7. The search and first objective revision are created.
+8. Three scouts build the first parentless playable alternatives.
 9. The studio opens or the user runs the documented studio command.
 
 The first interview should normally ask no more than three questions. Candidate dimensions include:
@@ -417,7 +427,7 @@ Selecting a candidate does not delete alternatives. The skill produces:
 
 **Objective:** The definition of what the search is optimizing, including constraints and evaluation rubric.
 
-**Node:** One immutable, runnable prototype artifact plus its design hypothesis and provenance.
+**Node:** One immutable, runnable prototype artifact plus its design hypothesis and provenance. A search can have multiple parentless root nodes.
 
 **Edge:** A typed relationship from one or more parent nodes to a child.
 
@@ -433,7 +443,7 @@ Selecting a candidate does not delete alternatives. The skill produces:
 
 ### 9.2 Edge types
 
-- `root`: initial playable interpretation;
+- `root`: a parentless first-round playable interpretation beneath the virtual objective root;
 - `refine`: local improvement preserving the parent's core hypothesis;
 - `branch`: adjacent alternative changing one major dimension;
 - `leap`: deliberate high-distance experiment;
@@ -556,37 +566,44 @@ search-for-fun/
 │           │   └── evaluation-guide.md
 │           └── scripts/
 │               ├── create-search.ts
-│               ├── create-node.ts
+│               ├── import-node.ts
 │               ├── validate-search.ts
-│               ├── seal-node.ts
+│               ├── claim-command.ts
+│               ├── complete-command.ts
+│               ├── fail-command.ts
 │               └── summarize-search.ts
 │
 ├── schemas/
 │   ├── search.schema.json
+│   ├── objective.schema.json
 │   ├── node.schema.json
 │   ├── command.schema.json
 │   ├── event.schema.json
-│   └── evaluation.schema.json
+│   ├── evaluation.schema.json
+│   └── scout-result.schema.json
 │
 ├── studio/
 │   ├── client/
-│   │   ├── graph/
-│   │   ├── player/
-│   │   ├── evaluation/
+│   │   ├── graph.tsx
+│   │   ├── player-frame.tsx
+│   │   ├── evaluation-panel.tsx
 │   │   └── app.tsx
 │   ├── server/
-│   │   ├── api.ts
-│   │   ├── filesystem.ts
+│   │   ├── app.ts
+│   │   ├── repository.ts
+│   │   ├── safe-fs.ts
 │   │   └── security.ts
 │   └── runtime/
 │       ├── create-kaplay-runtime.ts
-│       ├── Search-for-fun-game.ts
-│       ├── playtest-api.ts
+│       ├── contract.ts
+│       ├── player-host.ts
 │       └── input.ts
 │
 ├── searches/
 │   └── s_20260719_lighthouse/
 │       ├── search.json
+│       ├── objectives/
+│       │   └── rev_0001.json
 │       ├── events.jsonl
 │       ├── summary.md
 │       ├── commands/
@@ -596,7 +613,7 @@ search-for-fun/
 │       ├── evaluations/
 │       │   └── sessions/
 │       └── nodes/
-│           ├── n_0000_root/
+│           ├── n_0000_beam_rhythm/
 │           │   ├── node.json
 │           │   ├── hypothesis.md
 │           │   ├── game/
@@ -631,33 +648,19 @@ search-for-fun/
   "id": "s_20260719_lighthouse",
   "title": "Lighthouse in a Storm",
   "status": "exploring",
+  "phase": "exploration",
   "createdAt": "2026-07-19T20:00:00Z",
   "updatedAt": "2026-07-19T20:00:00Z",
   "engine": {
     "name": "kaplay",
     "version": "4000.0.0-alpha.27.1"
   },
-  "objective": {
-    "revision": 1,
-    "fantasy": "Keep a tiny lighthouse alive during an overwhelming storm",
-    "desiredFeeling": ["tense", "hopeful", "one-more-try"],
-    "sessionLengthSeconds": [30, 120],
-    "constraints": [
-      "one primary action",
-      "understandable within ten seconds",
-      "desktop browser first"
-    ],
-    "rubric": [
-      "fun",
-      "readability",
-      "fantasyFit",
-      "replayability",
-      "scopeConfidence"
-    ]
-  },
+  "activeObjectiveRevision": 1,
   "nextNodeSequence": 4
 }
 ```
+
+Objective revisions are immutable records under `objectives/`. For example, `objectives/rev_0001.json` contains the `searchId`, revision, creation time, success mode, fantasy, desired feelings, session range, constraints, rubric, and optional references, avoidance patterns, and innovation target.
 
 ### 12.2 Node record
 
@@ -666,10 +669,11 @@ search-for-fun/
   "schemaVersion": 1,
   "id": "n_0002_resource_loop",
   "searchId": "s_20260719_lighthouse",
-  "parents": ["n_0000_root"],
+  "parents": ["n_0000_beam_rhythm"],
   "generation": 1,
   "edgeType": "branch",
-  "status": "sealed",
+  "searchRole": "adjacent",
+  "lifecycleStatus": "sealed",
   "objectiveRevision": 1,
   "createdAt": "2026-07-19T20:18:00Z",
   "sealedAt": "2026-07-19T20:25:00Z",
@@ -682,14 +686,21 @@ search-for-fun/
     "single-screen lighthouse fantasy",
     "one-minute session target"
   ],
+  "provenance": {
+    "briefId": "first-round-adjacent",
+    "report": "Tests a shared-resource decision loop."
+  },
   "runtime": {
     "entry": "game/index.ts",
     "viewport": { "width": 960, "height": 540 },
     "orientation": "landscape",
-    "seed": 41832
+    "seed": 41832,
+    "actions": ["primary", "restart"]
   },
   "validation": {
+    "schema": "passed",
     "typecheck": "passed",
+    "bundle": "passed",
     "boot": "passed",
     "consoleErrors": 0,
     "screenshot": "preview.png"
@@ -711,15 +722,16 @@ Raw evaluations are append-only and retain their source.
   "objectiveRevision": 1,
   "createdAt": "2026-07-19T20:31:00Z",
   "session": {
+    "id": "session_20260719_01",
     "durationSeconds": 74,
     "restarts": 3,
     "completed": true
   },
   "ratings": {
     "fun": 4,
+    "appeal": 4,
     "readability": 2,
     "fantasyFit": 5,
-    "replayability": 4,
     "scopeConfidence": 3
   },
   "preserve": "The beam visibly weakening as power drops.",
@@ -754,6 +766,7 @@ Raw evaluations are append-only and retain their source.
 - `exploration_started`
 - `node_imported`
 - `node_sealed`
+- `node_validation_failed`
 - `evaluation_recorded`
 - `command_queued`
 - `command_claimed`
@@ -761,7 +774,7 @@ Raw evaluations are append-only and retain their source.
 - `candidate_selected`
 - `search_archived`
 
-The controller is the only writer to `events.jsonl`. The studio writes evaluation sessions and pending command files; the controller records their acceptance in the event log.
+The repository layer is the only writer to `events.jsonl`. Studio API writes and controller commands both pass through that layer, which serializes mutations with a per-search lock and records their accepted events.
 
 ### 12.6 Data invariants
 
@@ -827,9 +840,9 @@ Every playable node exports one definition:
 
 ```ts
 import type { KAPLAYCtx } from "kaplay";
-import type { Search-for-funGame, PlaytestApi } from "@search-for-fun/runtime";
+import type { SearchForFunGame, PlaytestApi } from "@search-for-fun/runtime";
 
-const game: Search-for-funGame = {
+const game: SearchForFunGame = {
   id: "n_0002_resource_loop",
   title: "Resource Loop",
   instructions: "Press or click to redirect power to the lighthouse beam.",
@@ -1293,20 +1306,21 @@ Agent-generated game code is untrusted until validated.
 - Play and restart a selected node.
 - Record structured feedback and freeform notes.
 - Flag multiple nodes.
+- Compare two flagged nodes side by side.
+- Queue and process crossover commands with multiple parents.
 - Write and process a pending expansion command.
 - Generate children with correct ancestry.
 - Preserve all prior nodes.
 - Reopen the search in a fresh Codex task.
 - Capture a preview and technical validation status for each node.
+- Generate a durable search summary.
 
 ### P1: valuable after the core loop works
 
-- Side-by-side compare mode.
-- Crossover commands with multiple parents.
 - Leap suggestions after repeated refinement.
 - Automated screenshot comparison.
 - Objective revision UI.
-- Search summary and candidate handoff generation.
+- Candidate handoff generation.
 - Failure nodes visible in a diagnostic graph layer.
 
 ### P2: future
@@ -1389,7 +1403,7 @@ Fixture nodes verify:
 
 ### 22.3 Integration tests
 
-- Create a search and root node.
+- Create a search and objective revision.
 - Import three staged nodes.
 - Reconstruct graph from disk.
 - Submit an evaluation.
@@ -1402,7 +1416,7 @@ Fixture nodes verify:
 
 1. Start from a clean repository.
 2. Create the lighthouse search.
-3. Load three fixture prototypes.
+3. Load three parentless fixture prototypes.
 4. Play and evaluate two nodes.
 5. Flag both.
 6. Process the pending command.

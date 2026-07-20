@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "cmd_2026-07-20T07-45-40-533Z_954fb71c",
+  "type": "favorite",
+  "searchId": "s_20260720_lighthouse_in_a_storm",
+  "nodeIds": [
+    "n_0000_beam_rhythm"
+  ],
+  "mode": "single",
+  "instruction": "",
+  "createdAt": "2026-07-20T07:45:40.533Z",
+  "createdBy": "studio",
+  "status": "processed",
+  "result": {
+    "completedAt": "2026-07-20T07:45:52.580Z",
+    "nodeIds": [
+      "n_0000_beam_rhythm"
+    ],
+    "summary": "Favorite disposition acknowledged after browser validation."
+  }
+}

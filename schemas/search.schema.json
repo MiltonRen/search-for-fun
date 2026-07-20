@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://search-for-fun.local/schemas/search.schema.json",
+  "title": "Search record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "id", "title", "status", "phase", "createdAt", "updatedAt", "engine", "activeObjectiveRevision", "nextNodeSequence"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "id": { "type": "string", "pattern": "^s_[0-9]{8}_[a-z0-9_]+$" },
+    "title": { "type": "string", "minLength": 1, "maxLength": 120 },
+    "status": { "enum": ["exploring", "narrowing", "selected", "archived"] },
+    "phase": { "enum": ["exploration", "narrowing", "candidate"] },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "updatedAt": { "type": "string", "format": "date-time" },
+    "engine": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version"],
+      "properties": {
+        "name": { "const": "kaplay" },
+        "version": { "const": "4000.0.0-alpha.27.1" }
+      }
+    },
+    "activeObjectiveRevision": { "type": "integer", "minimum": 1 },
+    "nextNodeSequence": { "type": "integer", "minimum": 0 }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://search-for-fun.local/schemas/event.schema.json",
+  "title": "Search event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "id", "type", "searchId", "createdAt", "payload"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "id": { "type": "string", "pattern": "^evt_[0-9TZ_-]+_[a-f0-9]{8}$" },
+    "type": { "enum": ["search_created", "objective_revised", "exploration_started", "node_imported", "node_sealed", "node_validation_failed", "evaluation_recorded", "command_queued", "command_claimed", "command_completed", "command_failed", "candidate_selected", "search_archived", "preview_captured"] },
+    "searchId": { "type": "string", "pattern": "^s_[0-9]{8}_[a-z0-9_]+$" },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "payload": { "type": "object", "maxProperties": 50 }
+  }
+}

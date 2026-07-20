@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "id": "n_0002_light_pushes_back",
+  "searchId": "s_20260720_lighthouse_in_a_storm",
+  "parents": [],
+  "generation": 0,
+  "edgeType": "root",
+  "searchRole": "leap",
+  "lifecycleStatus": "sealed",
+  "objectiveRevision": 1,
+  "createdAt": "2026-07-20T07:27:55.514Z",
+  "sealedAt": "2026-07-20T07:27:55.514Z",
+  "title": "Light Pushes Back",
+  "hypothesis": "Turning the lighthouse beam into a physical pulse that pushes storm clouds creates a surprising but readable survival toy.",
+  "changesFromParents": [],
+  "preserve": [
+    "one-button input",
+    "lighthouse fantasy",
+    "short survival session"
+  ],
+  "provenance": {
+    "briefId": "fixture-first-round-leap",
+    "report": "Tests a high-distance mechanic: light is force rather than timing or resource allocation."
+  },
+  "runtime": {
+    "entry": "game/index.ts",
+    "viewport": {
+      "width": 960,
+      "height": 540
+    },
+    "orientation": "landscape",
+    "seed": 41834,
+    "actions": [
+      "primary",
+      "restart"
+    ]
+  },
+  "validation": {
+    "schema": "passed",
+    "typecheck": "passed",
+    "bundle": "passed",
+    "boot": "passed",
+    "consoleErrors": 0,
+    "screenshot": "preview.png"
+  }
+}

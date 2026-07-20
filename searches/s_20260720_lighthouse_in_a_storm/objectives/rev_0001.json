@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "searchId": "s_20260720_lighthouse_in_a_storm",
+  "revision": 1,
+  "createdAt": "2026-07-20T07:24:20.527Z",
+  "successMode": "commercial",
+  "fantasy": "Keep a tiny lighthouse alive during an overwhelming storm",
+  "desiredFeeling": [
+    "tense",
+    "hopeful",
+    "one-more-try"
+  ],
+  "sessionLengthSeconds": [
+    30,
+    120
+  ],
+  "constraints": [
+    "one primary action",
+    "understandable within ten seconds",
+    "desktop browser first"
+  ],
+  "rubric": [
+    "fun",
+    "appeal",
+    "readability",
+    "fantasyFit",
+    "scopeConfidence"
+  ],
+  "referenceGames": [
+    "One Button Bob",
+    "Thronefall"
+  ],
+  "avoidPatterns": [
+    "dense resource dashboards",
+    "asset-heavy presentation"
+  ],
+  "innovationTarget": "balanced"
+}
