@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "id": "n_0002_pogo_storm",
+  "searchId": "s_20260720_jumpstorm_survivors",
+  "parents": [],
+  "generation": 0,
+  "edgeType": "root",
+  "searchRole": "leap",
+  "lifecycleStatus": "sealed",
+  "objectiveRevision": 1,
+  "createdAt": "2026-07-20T21:31:41.197Z",
+  "sealedAt": "2026-07-20T21:31:41.197Z",
+  "title": "Pogo Storm",
+  "hypothesis": "Converting platform jumps into a repeating offensive rhythm preserves agile platform fantasy while making the avatar itself the auto-escalating survivor weapon.",
+  "changesFromParents": [],
+  "preserve": [
+    "automatic launch-and-land movement",
+    "directional air steering plus one primary action",
+    "survivor-style enemy escalation and persistent run growth",
+    "640 by 640 keyboard-first presentation",
+    "grayscale geometry with one restrained gold accent"
+  ],
+  "provenance": {
+    "briefId": "first-round-leap",
+    "report": "A high-distance compressed survival experiment built around launch, steer, stomp, and explosive landing. The hero never walks: every landing automatically relaunches the pogo arc. Timed downward stomps widen landing shockwaves, clean kills grow an orbiting arsenal, and every orb unlocks stronger local chain reactions. Ground and hovering swarmers pressure different parts of the arc, while rough landings and direct contact drain health."
+  },
+  "runtime": {
+    "entry": "game/index.ts",
+    "viewport": {
+      "width": 640,
+      "height": 640
+    },
+    "orientation": "square",
+    "seed": 1729031,
+    "actions": [
+      "left",
+      "right",
+      "primary",
+      "restart"
+    ]
+  },
+  "validation": {
+    "schema": "passed",
+    "typecheck": "passed",
+    "bundle": "passed",
+    "boot": "passed",
+    "consoleErrors": 0,
+    "screenshot": "preview.png"
+  }
+}

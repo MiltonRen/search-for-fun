@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "ev_2026-07-20T22-30-37-610Z_5dfb62d9",
+  "type": "human_playtest",
+  "searchId": "s_20260720_jumpstorm_survivors",
+  "nodeId": "n_0003_pogo_storm_three_beats",
+  "objectiveRevision": 1,
+  "createdAt": "2026-07-20T22:30:37.610Z",
+  "session": {
+    "id": "5dd0ce60-4fa7-45a4-af65-fa01c89addba",
+    "durationSeconds": 3.3,
+    "restarts": 0,
+    "completed": false
+  },
+  "ratings": {
+    "fun": 3
+  },
+  "preserve": "",
+  "change": "",
+  "note": "",
+  "telemetry": []
+}

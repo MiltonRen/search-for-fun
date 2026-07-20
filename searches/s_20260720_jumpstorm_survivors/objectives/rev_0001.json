@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "searchId": "s_20260720_jumpstorm_survivors",
+  "revision": 1,
+  "createdAt": "2026-07-20T21:25:07.447Z",
+  "successMode": "joy",
+  "fantasy": "Bound through monster-packed arenas as an agile platform hero whose automatic arsenal grows into a screen-clearing survival engine",
+  "desiredFeeling": [
+    "nimble",
+    "escalating",
+    "overwhelming",
+    "in-control",
+    "one-more-run"
+  ],
+  "sessionLengthSeconds": [
+    180,
+    300
+  ],
+  "constraints": [
+    "keyboard-only core controls",
+    "understandable within ten seconds",
+    "640x640 viewport",
+    "primitive local visuals",
+    "no direct character, level, audio, or art imitation"
+  ],
+  "rubric": [
+    "fun"
+  ],
+  "referenceGames": [
+    "Super Mario Bros.",
+    "Vampire Survivors"
+  ],
+  "avoidPatterns": [
+    "stationary bullet-sponge play",
+    "passive waiting",
+    "copyrighted characters or visual imitation",
+    "upgrade menus that repeatedly stop movement"
+  ],
+  "innovationTarget": "balanced"
+}

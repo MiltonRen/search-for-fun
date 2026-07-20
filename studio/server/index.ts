@@ -6,15 +6,13 @@ import { createServer as createViteServer } from "vite";
 import { createApp } from "./app.js";
 import { findRepositoryRoot } from "./paths.js";
 import { SearchRepository } from "./repository.js";
+import { parseStudioPort } from "./studio-instance.js";
 
 const repositoryRoot = await findRepositoryRoot();
 const repository = await SearchRepository.create(repositoryRoot);
 const { app } = createApp({ repository });
 const production = process.argv.includes("--production");
-const port = Number(process.env.SEARCH_FOR_FUN_PORT ?? "4317");
-if (!Number.isInteger(port) || port < 1 || port > 65_535) {
-  throw new Error("SEARCH_FOR_FUN_PORT must be a whole TCP port between 1 and 65535");
-}
+const port = parseStudioPort();
 
 if (production) {
   const clientRoot = path.join(repositoryRoot, "dist", "studio");

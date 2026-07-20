@@ -7,6 +7,16 @@ description: Run a durable, repository-backed game-design search with playable K
 
 Treat game design as measured search. Keep the human in charge of the objective and preserve every completed branch as a sealed, playable node.
 
+## Studio lifecycle — required for every operation
+
+1. Immediately when this skill is invoked, run `npm run studio:ensure`. This starts the local studio in the background when needed and verifies it before continuing. Do not ask the user to run `npm run dev`.
+2. Perform the selected operation. The studio may remain running while scouts work and canonical results are imported.
+3. Wait for every delegated scout or subagent to finish. Complete or fail every claimed command, finish all imports and summaries, and run the operation's final validation.
+4. As the final lifecycle action before responding to the user, run `npm run studio:restart`. This must happen only after agent work and repository mutation are completely finished, so the user receives a clean process serving the final state.
+5. Run the final restart even when there was no pending work or the operation ended in a handled failure. If the manager reports an unrelated process on the configured port, leave it untouched and report the conflict instead of killing it.
+
+The managed studio writes only ignored PID metadata and logs under `.search-for-fun/`. Do not use ad hoc background shell commands or broad process-kill patterns.
+
 ## Choose the operation
 
 - **Start**: create an objective and three divergent root nodes.
@@ -16,6 +26,10 @@ Treat game design as measured search. Keep the human in charge of the objective 
 - **Synthesize**: compare evidence and recommend experiments without choosing for the user.
 
 Run `npm run validate` before mutation. Stop if the selected search is invalid; report the exact artifact and preserve it for repair.
+
+## Prototype implementation preflight
+
+Before writing or delegating any new prototype for Start, Continue, or a direct implementation move, read both [prototype-contract.md](references/prototype-contract.md) and [kaplay-v4000.md](references/kaplay-v4000.md). Include the pinned-v4000 transform rule and required motion check in every scout brief. A scout result is not complete until the visible player, attachments, and intended moving threats pass that check.
 
 ## Start a search
 
@@ -28,7 +42,7 @@ Run `npm run validate` before mutation. Stop if the selected search is invalid; 
 3. Use one numeric rating in the studio: `fun`, scored from one to five stars. Capture readability, appeal, fantasy fit, and scope concerns in the written feedback instead of adding proxy scores.
 4. Run `npm run search:create --` with explicit arguments. Never hand-author IDs. The creation script records `CODEX_THREAD_ID` when available so the studio can return to the originating task.
 5. Create exactly three first-round briefs: **Readable**, **Adjacent**, and **Leap**. All are parentless `root` nodes; the search objective is the virtual graph root.
-6. Read [prototype-contract.md](references/prototype-contract.md), then delegate the three independent briefs to three subagents in parallel when subagents are available. This skill explicitly requests that delegation. If capacity is unavailable, execute the same briefs sequentially. Give every scout a unique directory under `.search-for-fun/staging/`.
+6. Complete the prototype implementation preflight, then delegate the three independent briefs to three subagents in parallel when subagents are available. This skill explicitly requests that delegation. If capacity is unavailable, execute the same briefs sequentially. Give every scout a unique directory under `.search-for-fun/staging/`.
 7. Scouts may write only their assigned staging directory. They must produce `game/index.ts`, `result.json`, and `hypothesis.md`.
 8. Import each result with `npm run search:import --`. Import only after schema validation, typechecking, and bundling pass. Record a failed attempt instead of weakening the contract.
 9. Run `npm run validate`, summarize what each node tests, and ask the user to play them in the studio.
@@ -42,7 +56,7 @@ Run `npm run validate` before mutation. Stop if the selected search is invalid; 
    - `cross`: create one `crossover` child with every selected node as a parent;
    - `leap`: preserve the objective but change a major design dimension cheaply;
    - `favorite`, `archive`, `reject`, `select`: record the disposition; do not edit or delete the sealed node.
-4. For implementation commands, read the latest evidence and state explicit dimensions to preserve and change. Use a scout that did not originate the parent when practical.
+4. For implementation commands, complete the prototype implementation preflight, read the latest evidence, and state explicit dimensions to preserve and change. Use a scout that did not originate the parent when practical.
 5. Import validated children, then run `npm run search:complete --` with their IDs and a concise result summary.
 6. Run `npm run validate`. If a claimed command cannot be completed, run `npm run search:fail --` with the command ID and a concise reason. Never leave a failed command stranded in `processing` or silently retry it forever.
 

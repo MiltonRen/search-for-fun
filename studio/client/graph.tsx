@@ -143,7 +143,7 @@ export function ExplorationGraph(props: ExplorationGraphProps) {
                   className={stateClasses}
                   role="button"
                   tabIndex={0}
-                  aria-label={`${node.title}, ${roleLabel(node)} branch${drafted ? ", flagged" : ""}${node.validation.boot === "failed" ? ", failed validation" : ""}`}
+                  aria-label={`${node.title}, ${roleLabel(node)} branch${drafted ? ", added to next move" : ""}${node.validation.boot === "failed" ? ", failed validation" : ""}`}
                   onClick={(event) => {
                     if (event.shiftKey || event.metaKey || event.ctrlKey) props.onToggleDraft(node.id);
                     else props.onSelect(node.id);
@@ -174,7 +174,7 @@ export function ExplorationGraph(props: ExplorationGraphProps) {
                   <text x={x + 120} y={y + 28} className="node-kicker">{roleLabel(node).toUpperCase()}</text>
                   <text x={x + 106} y={y + 55} className="node-title">{shorten(node.title, 17)}</text>
                   <text x={x + 106} y={y + 78} className="node-meta">G{node.generation} · ★ {averageFun(node)}</text>
-                  {drafted && <text x={x + 204} y={y + 24} className="flag-mark">◆</text>}
+                  {drafted && <text x={x + 204} y={y + 24} className="next-move-mark">◆</text>}
                   {node.effectiveState.favorite && <text x={x + 202} y={y + 88} className="favorite-mark">★</text>}
                 </g>
               );
@@ -202,7 +202,7 @@ export function ExplorationGraph(props: ExplorationGraphProps) {
           ))}
         </div>
       )}
-      <p className="graph-hint">Click to open · Shift-click or Space to flag</p>
+      <p className="graph-hint">Click to open · Shift-click or Space to add to next move</p>
     </section>
   );
 }

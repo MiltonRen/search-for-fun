@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "id": "n_0001_orbitbound",
+  "searchId": "s_20260720_jumpstorm_survivors",
+  "parents": [],
+  "generation": 0,
+  "edgeType": "root",
+  "searchRole": "adjacent",
+  "lifecycleStatus": "sealed",
+  "objectiveRevision": 1,
+  "createdAt": "2026-07-20T21:31:40.647Z",
+  "sealedAt": "2026-07-20T21:31:40.647Z",
+  "title": "Orbitbound",
+  "hypothesis": "A small set of concentric movement lanes, with readable radial hops that briefly clear danger, will add platform-like spatial clarity and expressive evasion to automatic horde combat without becoming a side-scrolling platformer.",
+  "changesFromParents": [],
+  "preserve": [
+    "keyboard-only movement",
+    "automatic attacks",
+    "continuous in-motion power growth",
+    "short escalating survival run",
+    "primitive grayscale visuals with one accent"
+  ],
+  "provenance": {
+    "briefId": "first-round-adjacent",
+    "report": "Tests whether orbiting on four concentric rings and making deliberate inward/outward hops creates the clear, expressive dodge decisions associated with platform traversal while preserving a top-down survivor arena. Pickups and timed milestones increase volley width and fire rate without interrupting play."
+  },
+  "runtime": {
+    "entry": "game/index.ts",
+    "viewport": {
+      "width": 640,
+      "height": 640
+    },
+    "orientation": "square",
+    "seed": 68420317,
+    "actions": [
+      "left",
+      "right",
+      "up",
+      "down",
+      "restart"
+    ]
+  },
+  "validation": {
+    "schema": "passed",
+    "typecheck": "passed",
+    "bundle": "passed",
+    "boot": "passed",
+    "consoleErrors": 0,
+    "screenshot": "preview.png"
+  }
+}

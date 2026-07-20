@@ -7,6 +7,8 @@ interface EvaluationPanelProps {
   node: NodeProjection;
   session: LivePlaySession | null;
   saving: boolean;
+  selectedForNextMove: boolean;
+  onToggleNextMove(): void;
   onSave(payload: EvaluationPayload): Promise<void>;
 }
 
@@ -61,6 +63,23 @@ export function EvaluationPanel(props: EvaluationPanelProps) {
 
   return (
     <aside className="evaluation-panel" aria-label="Playtest feedback">
+      <section className="next-move-section" aria-labelledby="next-move-heading">
+        <div>
+          <span className="eyebrow">Next move</span>
+          <h2 id="next-move-heading">Explore this branch?</h2>
+        </div>
+        <button
+          type="button"
+          className={`next-move-button ${props.selectedForNextMove ? "selected" : ""}`}
+          aria-pressed={props.selectedForNextMove}
+          disabled={props.saving}
+          onClick={props.onToggleNextMove}
+        >
+          <span aria-hidden="true">{props.selectedForNextMove ? "✓" : "+"}</span>
+          {props.selectedForNextMove ? "Added to next move" : "Add to next move"}
+        </button>
+      </section>
+
       <div className="section-heading evaluation-heading">
         <div>
           <span className="eyebrow">Feedback</span>

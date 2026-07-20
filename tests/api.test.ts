@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it } from "vitest";
 import request from "supertest";
 import { createApp } from "../studio/server/app.js";
+import { studioRepositoryId } from "../studio/server/studio-instance.js";
 import { createTemporaryRepository, type TemporaryRepository } from "./helpers.js";
 
 const temporaryRepositories: TemporaryRepository[] = [];
@@ -16,6 +17,12 @@ describe("local studio API", () => {
     const { app } = createApp({ repository: fixture.repository, sessionToken: "test-session-token" });
     const host = "127.0.0.1:4317";
 
+    const health = await request(app).get("/api/health").set("Host", host).expect(200);
+    expect(health.body).toEqual({
+      ok: true,
+      pid: process.pid,
+      repositoryId: studioRepositoryId(fixture.root),
+    });
     await request(app).get("/api/searches").set("Host", host).expect(200);
     await request(app).get("/api/searches").set("Host", "evil.example").expect(403);
     await request(app).get("/api/searches").set("Host", "127.0.0.1:4317.evil").expect(403);

@@ -5,6 +5,7 @@ import path from "node:path";
 import { promisify } from "node:util";
 import { build, type BuildResult, type Metafile } from "esbuild";
 import type { NodeRecord } from "../shared/types.js";
+import { validateKaplayTransformWrites } from "./kaplay-source-validator.js";
 import { assertNodeId, assertSearchId } from "./paths.js";
 import { exists, readJson, safePath } from "./safe-fs.js";
 
@@ -138,6 +139,7 @@ export async function validateGameSource(repositoryRoot: string, entryPath: stri
   const extension = path.extname(entryPath);
   if (!ALLOWED_EXTENSIONS.has(extension)) throw new Error(`Unsupported node entry extension: ${extension}`);
   await typecheckGameEntry(repositoryRoot, entryPath);
+  await validateKaplayTransformWrites(path.dirname(entryPath));
   const syntheticNode: NodeRecord = {
     schemaVersion: 1,
     id: "n_0000_validation",

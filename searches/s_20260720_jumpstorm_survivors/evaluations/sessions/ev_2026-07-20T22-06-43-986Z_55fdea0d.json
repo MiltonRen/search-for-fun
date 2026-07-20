@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "id": "ev_2026-07-20T22-06-43-986Z_55fdea0d",
+  "type": "human_playtest",
+  "searchId": "s_20260720_jumpstorm_survivors",
+  "nodeId": "n_0002_pogo_storm",
+  "objectiveRevision": 1,
+  "createdAt": "2026-07-20T22:06:43.986Z",
+  "session": {
+    "id": "e0705961-a09f-495d-8e5d-f5fd6ece5cf0",
+    "durationSeconds": 22.1,
+    "restarts": 0,
+    "completed": false
+  },
+  "ratings": {
+    "fun": 3
+  },
+  "preserve": "",
+  "change": "",
+  "note": "add more variety",
+  "telemetry": [
+    {
+      "name": "first_input",
+      "atMs": 1396,
+      "properties": {
+        "method": "left"
+      }
+    },
+    {
+      "name": "damage",
+      "atMs": 3036,
+      "properties": {
+        "source": "contact",
+        "health": 4,
+        "orbit": 0,
+        "second": 1
+      }
+    },
+    {
+      "name": "goal",
+      "atMs": 3073,
+      "properties": {
+        "kind": "arsenal_growth",
+        "orbit": 1,
+        "cleared": 7,
+        "second": 1
+      }
+    },
+    {
+      "name": "damage",
+      "atMs": 4754,
+      "properties": {
+        "source": "rough_landing",
+        "health": 3,
+        "orbit": 1,
+        "second": 3
+      }
+    },
+    {
+      "name": "goal",
+      "atMs": 5597,
+      "properties": {
+        "kind": "arsenal_growth",
+        "orbit": 2,
+        "cleared": 14,
+        "second": 4
+      }
+    },
+    {
+      "name": "damage",
+      "atMs": 9821,
+      "properties": {
+        "source": "contact",
+        "health": 2,
+        "orbit": 2,
+        "second": 8
+      }
+    },
+    {
+      "name": "goal",
+      "atMs": 9846,
+      "properties": {
+        "kind": "arsenal_growth",
+        "orbit": 3,
+        "cleared": 17,
+        "second": 8
+      }
+    },
+    {
+      "name": "damage",
+      "atMs": 18429,
+      "properties": {
+        "source": "rough_landing",
+        "health": 1,
+        "orbit": 3,
+        "second": 17
+      }
+    },
+    {
+      "name": "goal",
+      "atMs": 19288,
+      "properties": {
+        "kind": "arsenal_growth",
+        "orbit": 4,
+        "cleared": 24,
+        "second": 17
+      }
+    }
+  ]
+}

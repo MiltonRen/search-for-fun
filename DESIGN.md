@@ -311,7 +311,7 @@ A small game team that wants designers, engineers, and artists to share an expli
 6. The skill conducts a short objective interview.
 7. The search and first objective revision are created.
 8. Three scouts build the first parentless playable alternatives.
-9. The studio opens or the user runs the documented studio command.
+9. The skill ensures the studio is running automatically, then cleanly restarts it after all scouts and imports finish.
 
 The first interview should normally ask no more than three questions. Candidate dimensions include:
 
@@ -1093,10 +1093,10 @@ Flagging a branch remains a separate map action. A prototype can be useful becau
 For the MVP, the bridge is file-based:
 
 1. Studio writes a pending command.
-2. Studio highlights pending work; the user opens a Codex task with the continuation prompt prefilled.
-3. The skill reads and processes pending commands.
+2. Studio replaces the selection dock with a passive bottom prompt: “Ask Codex to continue the search!”
+3. The user asks Codex to continue, and the skill reads and processes pending commands.
 
-With no pending work, “Resume in Codex” opens the stored originating task. Pending work uses a new local task with the repository path and continuation prompt prefilled because existing-thread deep links do not accept composer text. The link does not silently send a message or start agent work.
+With no pending work, “Resume in Codex” opens the stored originating task. When work is pending, that link is hidden and the non-clickable bottom prompt reports the pending task count. The prompt does not silently send a message or start agent work.
 
 An MCP-backed UI can later replace the explicit handoff if direct structured tool calls become essential.
 

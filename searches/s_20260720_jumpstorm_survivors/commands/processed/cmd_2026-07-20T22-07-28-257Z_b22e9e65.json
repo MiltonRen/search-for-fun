@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "cmd_2026-07-20T22-07-28-257Z_b22e9e65",
+  "type": "expand",
+  "searchId": "s_20260720_jumpstorm_survivors",
+  "nodeIds": [
+    "n_0002_pogo_storm",
+    "n_0001_orbitbound"
+  ],
+  "mode": "parallel",
+  "instruction": "search closely",
+  "createdAt": "2026-07-20T22:07:28.257Z",
+  "createdBy": "studio",
+  "status": "processed",
+  "result": {
+    "completedAt": "2026-07-20T22:29:07.376Z",
+    "nodeIds": [
+      "n_0003_pogo_storm_three_beats",
+      "n_0005_orbitbound_visible_ring_clamp"
+    ],
+    "summary": "Created two close-search refinements: Pogo Storm gains three early rotating threat patterns for encounter variety; Orbitbound gains a front-loaded telegraphed ring clamp that makes radial hops necessary. Live motion, attachment alignment, moving threats, restart, schema, typecheck, and bundle checks passed. One sealed Orbitbound render attempt (n_0004) was excluded after its background occluded rings and HUD; n_0005 repairs only that rendering issue."
+  }
+}

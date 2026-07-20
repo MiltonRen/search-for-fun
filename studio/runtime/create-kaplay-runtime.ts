@@ -1,5 +1,6 @@
 import kaplay, { type KAPLAYCtx } from "kaplay";
 import { DEFAULT_BUTTONS } from "./input.js";
+import { installLegacyTransformCompatibility } from "./legacy-transform-compat.js";
 
 export interface KaplayRuntimeOptions {
   canvas: HTMLCanvasElement;
@@ -14,8 +15,9 @@ export function createKaplayRuntime(options: KaplayRuntimeOptions): KAPLAYCtx {
       originalWarn(...values);
     }
   };
+  let runtime: KAPLAYCtx;
   try {
-    return kaplay({
+    runtime = kaplay({
       global: false,
       canvas: options.canvas,
       width: options.width,
@@ -29,4 +31,6 @@ export function createKaplayRuntime(options: KaplayRuntimeOptions): KAPLAYCtx {
   } finally {
     console.warn = originalWarn;
   }
+  installLegacyTransformCompatibility(runtime);
+  return runtime;
 }

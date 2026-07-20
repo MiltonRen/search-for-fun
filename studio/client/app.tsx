@@ -23,12 +23,11 @@ function commandDefault(count: number): CommandType {
   return count > 1 ? "cross" : "expand";
 }
 
-function resumeLink(projection: SearchProjection, prefillContinuation = false): string {
+function resumeLink(projection: SearchProjection): string {
   return buildCodexResumeLink({
     workspacePath: projection.workspacePath,
     searchId: projection.search.id,
     codexThreadId: projection.search.codexThreadId,
-    prefillContinuation,
   });
 }
 
@@ -252,9 +251,9 @@ export function App() {
         </div>
         <div className="header-status">
           <span className="node-total">{projection?.nodes.length ?? 0} nodes</span>
-          {projection && (
-            <a className={`codex-link ${pendingCommands > 0 ? "has-pending" : ""}`} href={resumeLink(projection, pendingCommands > 0)}>
-              {pendingCommands > 0 ? `${pendingCommands} pending` : "Resume in Codex"}
+          {projection && pendingCommands === 0 && (
+            <a className="codex-link" href={resumeLink(projection)}>
+              Resume in Codex
               <span aria-hidden="true">↗</span>
             </a>
           )}
@@ -312,11 +311,6 @@ export function App() {
               <div className="node-actions">
                 <button onClick={() => setRestartSignal((value) => value + 1)}><span aria-hidden="true">↻</span> Restart</button>
                 <button
-                  aria-pressed={draftNodeIds.has(selectedNode.id)}
-                  className={draftNodeIds.has(selectedNode.id) ? "active" : ""}
-                  onClick={() => toggleDraft(selectedNode.id)}
-                ><span aria-hidden="true">◆</span> {draftNodeIds.has(selectedNode.id) ? "Flagged" : "Flag"}</button>
-                <button
                   aria-pressed={selectedNode.effectiveState.favorite}
                   className={selectedNode.effectiveState.favorite ? "active" : ""}
                   disabled={selectedNode.effectiveState.favorite || saving}
@@ -337,7 +331,7 @@ export function App() {
             <section className="game-cell" aria-label="Prototype player">
               <div className="game-cell-heading">
                 <span>{compareMode ? "Side-by-side" : "Playable prototype"}</span>
-                <span>{compareMode ? "Two flagged branches" : `${selectedNode.runtime.viewport.width} × ${selectedNode.runtime.viewport.height}`}</span>
+                <span>{compareMode ? "Two selected branches" : `${selectedNode.runtime.viewport.width} × ${selectedNode.runtime.viewport.height}`}</span>
               </div>
               {compareMode && draftedNodes.length === 2 ? (
                 <div className="compare-grid">
@@ -361,7 +355,14 @@ export function App() {
               )}
             </section>
 
-            <EvaluationPanel node={selectedNode} session={liveSession} saving={saving} onSave={handleEvaluation} />
+            <EvaluationPanel
+              node={selectedNode}
+              session={liveSession}
+              saving={saving}
+              selectedForNextMove={draftNodeIds.has(selectedNode.id)}
+              onToggleNextMove={() => toggleDraft(selectedNode.id)}
+              onSave={handleEvaluation}
+            />
           </section>
         )}
 
@@ -374,7 +375,7 @@ export function App() {
               void handleQueueCommand();
             }}
           >
-            <div className="command-count"><b>{draftNodeIds.size}</b><span>flagged</span></div>
+            <div className="command-count"><b>{draftNodeIds.size}</b><span>selected</span></div>
             <div className="command-tabs" role="radiogroup" aria-label="Next move type">
               <button type="button" role="radio" aria-checked={commandType === "expand"} className={commandType === "expand" ? "active" : ""} onClick={() => setCommandType("expand")}>Expand</button>
               <button type="button" role="radio" aria-checked={commandType === "cross"} className={commandType === "cross" ? "active" : ""} disabled={draftNodeIds.size < 2} onClick={() => setCommandType("cross")}>Cross</button>
@@ -389,8 +390,15 @@ export function App() {
             />
             <button type="button" className="secondary-button" aria-pressed={compareMode} disabled={draftNodeIds.size !== 2} onClick={toggleCompare}>{compareMode ? "Stop compare" : "Compare"}</button>
             <button type="submit" className="primary-button" disabled={saving || (commandType === "cross" && draftNodeIds.size < 2)}>Queue <span aria-hidden="true">→</span></button>
-            <button type="button" className="clear-flags" aria-label="Clear flags" onClick={() => setDraftNodeIds(new Set())}>×</button>
+            <button type="button" className="clear-flags" aria-label="Clear selection" onClick={() => setDraftNodeIds(new Set())}>×</button>
           </form>
+        )}
+
+        {draftNodeIds.size === 0 && pendingCommands > 0 && (
+          <div className="pending-codex-bar" role="status">
+            <strong>Now ask Codex to continue the search!</strong>
+            <span>{pendingCommands} pending {pendingCommands === 1 ? "task" : "tasks"}</span>
+          </div>
         )}
       </main>
 

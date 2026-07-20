@@ -6,6 +6,7 @@ import { NodeBundleCache } from "./node-bundler.js";
 import { assertNodeId, assertSearchId } from "./paths.js";
 import { SearchRepository } from "./repository.js";
 import { createWriteGuard, localHostGuard, noStore } from "./security.js";
+import { studioRepositoryId } from "./studio-instance.js";
 
 export interface AppOptions {
   repository: SearchRepository;
@@ -66,6 +67,7 @@ export function createApp(options: AppOptions): { app: Express; sessionToken: st
   const sessionToken = options.sessionToken ?? randomBytes(24).toString("hex");
   const bundleCache = options.bundleCache ?? new NodeBundleCache(options.repository.root);
   const writeGuard = createWriteGuard(sessionToken);
+  const repositoryId = studioRepositoryId(options.repository.root);
 
   app.disable("x-powered-by");
   app.set("trust proxy", false);
@@ -80,7 +82,7 @@ export function createApp(options: AppOptions): { app: Express; sessionToken: st
 
   app.get("/api/health", (_request, response) => {
     noStore(response);
-    response.json({ ok: true });
+    response.json({ ok: true, pid: process.pid, repositoryId });
   });
 
   app.get("/api/session", (_request, response) => {

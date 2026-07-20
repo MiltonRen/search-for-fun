@@ -6,6 +6,10 @@
   "description": "Local-first game-design search with Codex and KAPLAY.",
   "scripts": {
     "dev": "node --import tsx studio/server/index.ts",
+    "studio:ensure": "node --import tsx .agents/skills/search-for-fun/scripts/manage-studio.ts ensure",
+    "studio:restart": "node --import tsx .agents/skills/search-for-fun/scripts/manage-studio.ts restart",
+    "studio:status": "node --import tsx .agents/skills/search-for-fun/scripts/manage-studio.ts status",
+    "studio:stop": "node --import tsx .agents/skills/search-for-fun/scripts/manage-studio.ts stop",
     "build": "npm run typecheck && npm run build:client && npm run build:server",
     "build:client": "vite build",
     "build:server": "esbuild studio/server/index.ts --bundle --platform=node --format=esm --packages=external --outfile=dist/server/index.js",

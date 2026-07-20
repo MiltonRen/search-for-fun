@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "id": "n_0004_orbitbound_ring_clamp",
+  "searchId": "s_20260720_jumpstorm_survivors",
+  "parents": [
+    "n_0001_orbitbound"
+  ],
+  "generation": 1,
+  "edgeType": "refine",
+  "searchRole": "refinement",
+  "lifecycleStatus": "sealed",
+  "objectiveRevision": 1,
+  "createdAt": "2026-07-20T22:21:06.522Z",
+  "sealedAt": "2026-07-20T22:21:06.522Z",
+  "title": "Orbitbound: Ring Clamp",
+  "hypothesis": "A clearly telegraphed ring clamp that makes one lane temporarily unsafe will turn radial hops into meaningful, readable survival decisions without changing Orbitbound's movement, automatic combat, or progression loop.",
+  "changesFromParents": [
+    "Adds one challenge-pressure system: paired clamp teeth visibly converge on the player's current ring, warn for 1.55–2.6 seconds, then deny that ring unless the player makes a safe radial hop."
+  ],
+  "preserve": [
+    "exactly four concentric movement lanes",
+    "left and right orbit movement",
+    "up and down radial hops with readable transition safety",
+    "automatic targeting and volley attacks",
+    "continuous pickup and timed-milestone power growth",
+    "sparse grayscale geometry with one accent at 640 by 640",
+    "deterministic keyboard-only survival loop"
+  ],
+  "provenance": {
+    "briefId": "cmd-b22e9e65-orbit-challenge",
+    "report": "Tests challenge pressure only. The first ring clamp warns at 2.8 seconds and resolves near 5.4 seconds, front-loading a forgiving measurement inside the prior 8.2-second play window. Two authoritative clamp teeth travel along the targeted ring while that whole lane flashes; hopping to an adjacent ring or being in the safe transition window avoids the beat. Later clamps arrive more often and close faster, making idling unsafe through clear spatial denial rather than inflated health or enemy durability. The four lanes, orbit speed, hop timing and safety, automatic volley, enemy model, pickup thresholds, survival milestones, run length, health, controls, and art language remain controlled against Orbitbound."
+  },
+  "runtime": {
+    "entry": "game/index.ts",
+    "viewport": {
+      "width": 640,
+      "height": 640
+    },
+    "orientation": "square",
+    "seed": 68420317,
+    "actions": [
+      "left",
+      "right",
+      "up",
+      "down",
+      "restart"
+    ]
+  },
+  "validation": {
+    "schema": "passed",
+    "typecheck": "passed",
+    "bundle": "passed",
+    "boot": "passed",
+    "consoleErrors": 0,
+    "screenshot": "preview.png"
+  }
+}

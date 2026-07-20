@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "ev_2026-07-20T22-07-01-586Z_81e77a5f",
+  "type": "human_playtest",
+  "searchId": "s_20260720_jumpstorm_survivors",
+  "nodeId": "n_0000_arcstep_horde",
+  "objectiveRevision": 1,
+  "createdAt": "2026-07-20T22:07:01.586Z",
+  "session": {
+    "id": "563368dd-f1ca-488c-82ee-22a80d756279",
+    "durationSeconds": 5,
+    "restarts": 0,
+    "completed": false
+  },
+  "ratings": {
+    "fun": 2
+  },
+  "preserve": "",
+  "change": "",
+  "note": "",
+  "telemetry": []
+}

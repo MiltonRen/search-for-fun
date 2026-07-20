@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "ev_2026-07-20T22-31-32-429Z_df1b347c",
+  "type": "human_playtest",
+  "searchId": "s_20260720_jumpstorm_survivors",
+  "nodeId": "n_0004_orbitbound_ring_clamp",
+  "objectiveRevision": 1,
+  "createdAt": "2026-07-20T22:31:32.429Z",
+  "session": {
+    "id": "6c46eca5-83b2-4db2-8992-dd4c38102086",
+    "durationSeconds": 6.3,
+    "restarts": 0,
+    "completed": false
+  },
+  "ratings": {
+    "fun": 1
+  },
+  "preserve": "",
+  "change": "",
+  "note": "confusing",
+  "telemetry": []
+}

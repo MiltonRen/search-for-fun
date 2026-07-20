@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "id": "n_0003_pogo_storm_three_beats",
+  "searchId": "s_20260720_jumpstorm_survivors",
+  "parents": [
+    "n_0002_pogo_storm"
+  ],
+  "generation": 1,
+  "edgeType": "refine",
+  "searchRole": "refinement",
+  "lifecycleStatus": "sealed",
+  "objectiveRevision": 1,
+  "createdAt": "2026-07-20T22:21:05.886Z",
+  "sealedAt": "2026-07-20T22:21:05.886Z",
+  "title": "Pogo Storm: Three Beats",
+  "hypothesis": "Rotating three mechanically distinct threat patterns through Pogo Storm's controlled bounce-and-stomp loop will turn repeated arcs into varied route and timing decisions without weakening the original rhythm.",
+  "changesFromParents": [
+    "Replace uniform mixed spawning with a repeating early rotation of ground skitter rushes, altitude-crossing hover weaves, and telegraphed ground-lane charger sweeps."
+  ],
+  "preserve": [
+    "automatic launch-and-land pogo arcs",
+    "left/right air steering and primary stomp timing",
+    "landing shockwaves and orbiting arsenal growth",
+    "the parent's approximate enemy density, health pressure, 84-second run, and progression rate",
+    "primitive grayscale geometry with one restrained gold accent",
+    "deterministic 640 by 640 keyboard-only play"
+  ],
+  "provenance": {
+    "briefId": "cmd-b22e9e65-pogo-variety",
+    "report": "Responds directly to the 3/5, 22.1-second playtest note 'add more variety' while controlling the successful fast orbit growth and core damage model. Ground skitters converge into profitable landing clusters, hover weaves cross the normal arc and reward steering or an early stomp, and a bright pre-line warns of a fast ground charger that rewards staying airborne. The patterns rotate at about 5.4 and 10.8 seconds, so all three are visible inside the prior playtest duration. Pattern telemetry is added only to distinguish exposure; controls, art, progression, and success conditions stay fixed."
+  },
+  "runtime": {
+    "entry": "game/index.ts",
+    "viewport": {
+      "width": 640,
+      "height": 640
+    },
+    "orientation": "square",
+    "seed": 1729031,
+    "actions": [
+      "left",
+      "right",
+      "primary",
+      "restart"
+    ]
+  },
+  "validation": {
+    "schema": "passed",
+    "typecheck": "passed",
+    "bundle": "passed",
+    "boot": "passed",
+    "consoleErrors": 0,
+    "screenshot": "preview.png"
+  }
+}

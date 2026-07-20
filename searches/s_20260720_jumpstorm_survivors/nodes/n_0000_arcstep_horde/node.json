@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "id": "n_0000_arcstep_horde",
+  "searchId": "s_20260720_jumpstorm_survivors",
+  "parents": [],
+  "generation": 0,
+  "edgeType": "root",
+  "searchRole": "readable",
+  "lifecycleStatus": "sealed",
+  "objectiveRevision": 1,
+  "createdAt": "2026-07-20T21:31:40.092Z",
+  "sealedAt": "2026-07-20T21:31:40.092Z",
+  "title": "Arcstep Horde",
+  "hypothesis": "Combining familiar side-view movement and forgiving jumping with automatic aimed attacks will make horde evasion and platform positioning immediately fun.",
+  "changesFromParents": [],
+  "preserve": [
+    "side-view platform movement with Arrow Keys or A/D",
+    "Space or Up jumping with forgiving coyote time and jump buffering",
+    "automatic aimed combat against an escalating enemy swarm",
+    "defeat drops that visibly grow automatic weapon power",
+    "the objective's three-to-five-minute target session, represented by a compressed 96-second escalation demo"
+  ],
+  "provenance": {
+    "briefId": "first-round-readable",
+    "report": "Tests the readable baseline: move and jump across a compact six-platform arena while bolts automatically aim at the nearest threats. Defeated enemies drop magnetic sparks; each power tier visibly enlarges the aura, adds an orbiting spark, accelerates fire, and periodically adds another aimed bolt. The horde spawns faster and adds heavier jumpers over a compressed 96-second demonstration. The smallest useful playtest measurement is whether the player reaches the first power tier and keeps using jumps to reposition rather than waiting on one platform."
+  },
+  "runtime": {
+    "entry": "game/index.ts",
+    "viewport": {
+      "width": 640,
+      "height": 640
+    },
+    "orientation": "square",
+    "seed": 20260720,
+    "actions": [
+      "left",
+      "right",
+      "up",
+      "primary",
+      "restart"
+    ]
+  },
+  "validation": {
+    "schema": "passed",
+    "typecheck": "passed",
+    "bundle": "passed",
+    "boot": "passed",
+    "consoleErrors": 0,
+    "screenshot": "preview.png"
+  }
+}
