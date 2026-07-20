@@ -30,6 +30,7 @@ export async function createTemporaryRepository(): Promise<TemporaryRepository> 
       constraints: ["one button"],
       rubric: ["fun", "readability"],
       innovationTarget: "balanced",
+      codexThreadId: "thread_test_123",
     },
     new Date("2026-07-19T20:00:00.000Z"),
   );

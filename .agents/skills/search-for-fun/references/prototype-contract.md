@@ -51,12 +51,14 @@ The final canonical module ID must equal its allocated node ID. A staging module
 - Do not add packages, remote URLs, DOM overlays, storage, workers, or network requests.
 - Use the supplied non-global `KAPLAYCtx`.
 - Prefer semantic buttons: `primary`, `secondary`, directions, `pause`, and `restart`.
-- Build for the declared viewport, normally 960 × 540.
+- Build for the declared viewport, normally 640 × 640.
 - Call `playtest.ready()` only after the first interactive scene exists. The host captures a screenshot after readiness.
 - Emit small, documented telemetry events. Useful names include `first_input`, `decision`, `damage`, `death`, `goal`, and `round_end`.
 - Call `playtest.complete()` for success and `playtest.fail()` for an in-game failure. Runtime exceptions are captured separately.
 - Keep the experiment understandable within the objective's target and make restart safe.
-- Use geometry, text, and small local sounds before asset-heavy presentation.
+- Use a grayscale foundation with one restrained accent unless the brief specifies an art direction.
+- Keep in-game copy sparse: one short control hint and compact state labels are normally enough.
+- Use geometry and small local sounds before asset-heavy presentation.
 
 ## Result manifest
 
@@ -76,7 +78,7 @@ The final canonical module ID must equal its allocated node ID. A staging module
   "report": "Tests whether a visible timing window alone carries the fantasy.",
   "actions": ["primary", "restart"],
   "seed": 41832,
-  "viewport": { "width": 960, "height": 540 }
+  "viewport": { "width": 640, "height": 640 }
 }
 ```
 

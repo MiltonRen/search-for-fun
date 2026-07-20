@@ -16,19 +16,24 @@ interface PositionedNode {
   y: number;
 }
 
-const NODE_WIDTH = 168;
-const NODE_HEIGHT = 82;
+const NODE_WIDTH = 224;
+const NODE_HEIGHT = 104;
+const OBJECTIVE_WIDTH = 220;
 
-function averageRating(node: NodeProjection): string {
-  const values = node.evaluations.flatMap((evaluation) =>
-    Object.values(evaluation.ratings).filter((value): value is number => typeof value === "number"),
-  );
+function averageFun(node: NodeProjection): string {
+  const values = node.evaluations
+    .map((evaluation) => evaluation.ratings.fun)
+    .filter((value): value is number => typeof value === "number");
   if (!values.length) return "—";
   return (values.reduce((total, value) => total + value, 0) / values.length).toFixed(1);
 }
 
 function roleLabel(node: NodeProjection): string {
   return node.searchRole.replaceAll("_", " ");
+}
+
+function shorten(value: string, length: number): string {
+  return value.length > length ? `${value.slice(0, length - 1)}…` : value;
 }
 
 export function ExplorationGraph(props: ExplorationGraphProps) {
@@ -46,7 +51,7 @@ export function ExplorationGraph(props: ExplorationGraphProps) {
     for (const [generation, bucket] of [...generations.entries()].sort(([left], [right]) => left - right)) {
       maxRows = Math.max(maxRows, bucket.length);
       bucket.forEach((node, index) => {
-        positioned.push({ node, x: 250 + generation * 224, y: 36 + index * 112 });
+        positioned.push({ node, x: 352 + generation * 304, y: 68 + index * 142 });
       });
     }
     const byId = new Map(positioned.map((item) => [item.node.id, item]));
@@ -54,19 +59,18 @@ export function ExplorationGraph(props: ExplorationGraphProps) {
     return {
       positioned,
       byId,
-      width: Math.max(760, 250 + (maxGeneration + 1) * 224),
-      height: Math.max(340, 60 + maxRows * 112),
+      width: Math.max(1120, 352 + (maxGeneration + 1) * 304 + 72),
+      height: Math.max(650, 130 + maxRows * 142),
     };
   }, [props.nodes]);
 
   return (
-    <section className="graph-section" aria-label="Exploration graph">
-      <div className="section-heading graph-heading">
+    <section className={`graph-section ${props.selectedNodeId ? "has-expansion" : ""}`} aria-label="Exploration map">
+      <div className="graph-heading">
         <div>
           <span className="eyebrow">Search map</span>
-          <h2>Exploration</h2>
         </div>
-        <div className="segmented-control" aria-label="Graph display">
+        <div className="segmented-control" aria-label="Map display">
           <button aria-pressed={view === "graph"} className={view === "graph" ? "active" : ""} onClick={() => setView("graph")}>Map</button>
           <button aria-pressed={view === "list"} className={view === "list" ? "active" : ""} onClick={() => setView("list")}>List</button>
         </div>
@@ -80,26 +84,36 @@ export function ExplorationGraph(props: ExplorationGraphProps) {
             role="group"
             aria-label={`${props.nodes.length} playable design branches`}
           >
+            <defs>
+              {layout.positioned.map(({ node, x, y }) => (
+                <clipPath id={`preview-${node.id}`} key={node.id}>
+                  <rect x={x + 10} y={y + 10} width="82" height="84" rx="11" />
+                </clipPath>
+              ))}
+            </defs>
+
             <g className="objective-node">
-              <rect x="24" y={layout.height / 2 - 46} width="168" height="92" rx="18" />
-              <text x="42" y={layout.height / 2 - 17} className="node-kicker">OBJECTIVE</text>
-              <text x="42" y={layout.height / 2 + 8} className="node-title">
-                {props.objective.fantasy.slice(0, 20)}{props.objective.fantasy.length > 20 ? "…" : ""}
+              <rect x="60" y={layout.height / 2 - 56} width={OBJECTIVE_WIDTH} height="112" rx="22" />
+              <text x="84" y={layout.height / 2 - 23} className="node-kicker">OBJECTIVE · REV {props.objective.revision}</text>
+              <text x="84" y={layout.height / 2 + 7} className="objective-title">
+                {shorten(props.objective.fantasy, 25)}
               </text>
-              <text x="42" y={layout.height / 2 + 30} className="node-meta">rev {props.objective.revision}</text>
+              <text x="84" y={layout.height / 2 + 35} className="node-meta">
+                {shorten(props.objective.desiredFeeling.join(" · "), 31)}
+              </text>
             </g>
 
             <g className="graph-edges" aria-hidden="true">
               {layout.positioned.flatMap(({ node, x, y }) => {
                 const targets = node.parents.length
                   ? node.parents.map((parent) => layout.byId.get(parent)).filter(Boolean) as PositionedNode[]
-                  : [{ x: 24, y: layout.height / 2 - 46, node } as PositionedNode];
+                  : [{ x: 60, y: layout.height / 2 - 56, node } as PositionedNode];
                 return targets.map((parent, index) => {
-                  const startX = node.parents.length ? parent.x + NODE_WIDTH : 192;
+                  const startX = node.parents.length ? parent.x + NODE_WIDTH : 60 + OBJECTIVE_WIDTH;
                   const startY = node.parents.length ? parent.y + NODE_HEIGHT / 2 : layout.height / 2;
                   const endX = x;
                   const endY = y + NODE_HEIGHT / 2;
-                  const bend = Math.max(36, (endX - startX) * 0.48);
+                  const bend = Math.max(42, (endX - startX) * 0.48);
                   return (
                     <path
                       key={`${node.id}-${parent.node.id}-${index}`}
@@ -142,15 +156,26 @@ export function ExplorationGraph(props: ExplorationGraphProps) {
                     }
                   }}
                 >
-                  <rect x={x} y={y} width={NODE_WIDTH} height={NODE_HEIGHT} rx="16" />
-                  <circle cx={x + 18} cy={y + 19} r="5" className="role-dot" />
-                  <text x={x + 31} y={y + 23} className="node-kicker">{roleLabel(node).toUpperCase()}</text>
-                  <text x={x + 16} y={y + 49} className="node-title">
-                    {node.title.slice(0, 21)}{node.title.length > 21 ? "…" : ""}
-                  </text>
-                  <text x={x + 16} y={y + 69} className="node-meta">G{node.generation} · {averageRating(node)} avg</text>
-                  {drafted && <text x={x + 145} y={y + 23} className="flag-mark">◆</text>}
-                  {node.effectiveState.favorite && <text x={x + 144} y={y + 68} className="favorite-mark">★</text>}
+                  <rect x={x} y={y} width={NODE_WIDTH} height={NODE_HEIGHT} rx="18" />
+                  {node.previewUrl ? (
+                    <image
+                      href={node.previewUrl}
+                      x={x + 10}
+                      y={y + 10}
+                      width="82"
+                      height="84"
+                      preserveAspectRatio="xMidYMid slice"
+                      clipPath={`url(#preview-${node.id})`}
+                    />
+                  ) : (
+                    <rect className="node-preview-placeholder" x={x + 10} y={y + 10} width="82" height="84" rx="11" />
+                  )}
+                  <circle cx={x + 108} cy={y + 24} r="4" className="role-dot" />
+                  <text x={x + 120} y={y + 28} className="node-kicker">{roleLabel(node).toUpperCase()}</text>
+                  <text x={x + 106} y={y + 55} className="node-title">{shorten(node.title, 17)}</text>
+                  <text x={x + 106} y={y + 78} className="node-meta">G{node.generation} · ★ {averageFun(node)}</text>
+                  {drafted && <text x={x + 204} y={y + 24} className="flag-mark">◆</text>}
+                  {node.effectiveState.favorite && <text x={x + 202} y={y + 88} className="favorite-mark">★</text>}
                 </g>
               );
             })}
@@ -164,16 +189,20 @@ export function ExplorationGraph(props: ExplorationGraphProps) {
                 className={`node-list-item ${props.selectedNodeId === node.id ? "selected" : ""} ${node.validation.boot === "failed" ? "failed" : ""}`}
                 onClick={() => props.onSelect(node.id)}
               >
-                <span className={`list-role role-${node.searchRole}`}>{roleLabel(node)}</span>
-                <strong>{node.title}</strong>
-                <span>{node.id}</span>
-                <span>{node.evaluations.length} playtest{node.evaluations.length === 1 ? "" : "s"}</span>
+                <span className="list-preview">
+                  {node.previewUrl ? <img src={node.previewUrl} alt="" /> : <i />}
+                </span>
+                <span className="list-copy">
+                  <span className="list-topline"><span className="list-role">{roleLabel(node)}</span><span>G{node.generation} · ★ {averageFun(node)}</span></span>
+                  <strong>{node.title}</strong>
+                  <span>{node.id}</span>
+                </span>
               </button>
             </div>
           ))}
         </div>
       )}
-      <p className="graph-hint">Select to play · Shift-click or Space to flag</p>
+      <p className="graph-hint">Click to open · Shift-click or Space to flag</p>
     </section>
   );
 }

@@ -17,6 +17,7 @@ export interface SearchRecord {
     name: "kaplay";
     version: "4000.0.0-alpha.27.1";
   };
+  codexThreadId?: string;
   activeObjectiveRevision: number;
   nextNodeSequence: number;
 }
@@ -72,7 +73,7 @@ export interface NodeRecord {
   runtime: {
     entry: "game/index.ts";
     viewport: { width: number; height: number };
-    orientation: "landscape" | "portrait";
+    orientation: "landscape" | "portrait" | "square";
     seed: number;
     actions: string[];
   };

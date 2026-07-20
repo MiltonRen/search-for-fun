@@ -16,10 +16,11 @@ try {
   if (session.length !== 2 || session.some((value) => !Number.isInteger(value))) {
     throw new Error("--session must be two comma-separated whole seconds, for example 30,120");
   }
-  const defaultRubric = successMode === "commercial"
-    ? ["fun", "appeal", "readability", "fantasyFit", "scopeConfidence"]
-    : ["fun", "readability", "fantasyFit", "replayability", "scopeConfidence"];
   const requestedRubric = commaList(optionalString(args, "rubric"));
+  if (requestedRubric.some((dimension) => dimension !== "fun")) {
+    throw new Error("--rubric supports only fun; capture diagnostic evidence in written feedback");
+  }
+  const codexThreadId = optionalString(args, "codex-thread-id") ?? process.env.CODEX_THREAD_ID?.trim();
   const search = await repository.createSearch({
     title: requiredString(args, "title"),
     fantasy: requiredString(args, "fantasy"),
@@ -27,10 +28,11 @@ try {
     desiredFeeling: commaList(requiredString(args, "feel")),
     sessionLengthSeconds: [session[0]!, session[1]!],
     constraints: pipeList(optionalString(args, "constraints")),
-    rubric: requestedRubric.length > 0 ? requestedRubric : defaultRubric,
+    rubric: ["fun"],
     referenceGames: commaList(optionalString(args, "references")),
     avoidPatterns: pipeList(optionalString(args, "avoid")),
     innovationTarget: (optionalString(args, "innovation") as ObjectiveRecord["innovationTarget"]) ?? "balanced",
+    ...(codexThreadId ? { codexThreadId } : {}),
   });
   printJson(search);
 } catch (error) {

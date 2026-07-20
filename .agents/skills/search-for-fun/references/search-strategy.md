@@ -16,13 +16,9 @@ Use the user's prior games, reference games, reviews, and known patterns as navi
 
 ## 4. Optimize the correct objective
 
-Joy, portfolio value, learning, and commercial success require different rubrics. For commercial work, the useful starting decomposition is:
+Joy, portfolio value, learning, and commercial success still require different search objectives, but the studio keeps the numeric signal intentionally simple: one one-to-five `fun` rating. Use written feedback, telemetry, and agent critique to diagnose readability, appeal, fantasy fit, replayability, and scope without pretending those proxies combine into a more precise score.
 
-- fun: keeps players engaged;
-- appeal: earns attention through presentation, fantasy, and readability;
-- scope confidence: protects the chance of finishing at quality.
-
-Never let a proxy rating silently replace the stated objective.
+Never let the fun rating silently replace the full stated objective.
 
 ## 5. Expect noisy measurements
 

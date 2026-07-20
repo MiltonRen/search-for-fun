@@ -40,6 +40,7 @@ try {
     const latest = node.evaluations[0];
     if (latest) {
       lines.push(`- Latest ratings: ${scoreSummary(latest.ratings)}.`);
+      if (latest.note) lines.push(`- Feedback: ${latest.note}`);
       if (latest.preserve) lines.push(`- Preserve: ${latest.preserve}`);
       if (latest.change) lines.push(`- Change: ${latest.change}`);
     }

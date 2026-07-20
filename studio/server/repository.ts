@@ -61,6 +61,7 @@ export interface CreateSearchInput {
   referenceGames?: string[];
   avoidPatterns?: string[];
   innovationTarget?: ObjectiveRecord["innovationTarget"];
+  codexThreadId?: string;
 }
 
 export interface ScoutResult {
@@ -377,6 +378,7 @@ export class SearchRepository {
       createdAt: timestamp,
       updatedAt: timestamp,
       engine: { name: "kaplay", version: "4000.0.0-alpha.27.1" },
+      ...(input.codexThreadId ? { codexThreadId: input.codexThreadId } : {}),
       activeObjectiveRevision: 1,
       nextNodeSequence: 0,
     };
@@ -721,7 +723,7 @@ export class SearchRepository {
         ? 0
         : Math.max(...parentRecords.map((parent) => parent.generation)) + 1;
       const timestamp = new Date().toISOString();
-      const viewport = result.viewport ?? { width: 960, height: 540 };
+      const viewport = result.viewport ?? { width: 640, height: 640 };
       const node: NodeRecord = {
         schemaVersion: 1,
         id: nodeId,
@@ -742,7 +744,9 @@ export class SearchRepository {
         runtime: {
           entry: "game/index.ts",
           viewport,
-          orientation: viewport.height > viewport.width ? "portrait" : "landscape",
+          orientation: viewport.height === viewport.width
+            ? "square"
+            : viewport.height > viewport.width ? "portrait" : "landscape",
           seed: result.seed ?? randomInt(0, 2_147_483_647),
           actions: result.actions,
         },

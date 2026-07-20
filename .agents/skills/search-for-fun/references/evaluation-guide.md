@@ -4,7 +4,7 @@
 
 Keep these sources distinct:
 
-1. **Human playtest**: subjective ratings, what to preserve, what to change, and observations.
+1. **Human playtest**: one subjective fun rating and concise written feedback about what felt good or got in the way.
 2. **Behavioral telemetry**: duration, first input, restarts, completion, failure, and declared events.
 3. **Technical evidence**: schema, typecheck, bundle, boot, console, screenshot, and teardown results.
 4. **Agent critique**: hypothesis fit, confounds, readability, scope risk, and suggested experiments.
@@ -25,7 +25,7 @@ Human judgment remains authoritative for creative selection.
 ## Re-measure when
 
 - an extreme rating follows a very short session;
-- prose contradicts numeric ratings;
+- written feedback contradicts the fun rating;
 - a runtime error or unclear instruction affected the session;
 - the evaluator built the branch and may be attached to it;
 - close branches would otherwise be chosen arbitrarily.

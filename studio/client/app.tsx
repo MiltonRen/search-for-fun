@@ -11,6 +11,7 @@ import {
 import { EvaluationPanel } from "./evaluation-panel";
 import { ExplorationGraph } from "./graph";
 import { PlayerFrame, type LivePlaySession } from "./player-frame";
+import { buildCodexResumeLink } from "./codex-link";
 
 type Notice = { kind: "success" | "error"; message: string };
 
@@ -18,15 +19,17 @@ function nodeRoleLabel(node: NodeProjection): string {
   return node.searchRole.replaceAll("_", " ");
 }
 
-function commandDefaults(count: number): { type: CommandType; mode: "single" | "parallel" | "crossover" } {
-  return count > 1
-    ? { type: "cross", mode: "crossover" }
-    : { type: "expand", mode: "single" };
+function commandDefault(count: number): CommandType {
+  return count > 1 ? "cross" : "expand";
 }
 
-function resumeLink(projection: SearchProjection): string {
-  const prompt = `$search-for-fun Resume ${projection.search.id} and process the pending commands.`;
-  return `codex://new?path=${encodeURIComponent(projection.workspacePath)}&prompt=${encodeURIComponent(prompt)}`;
+function resumeLink(projection: SearchProjection, prefillContinuation = false): string {
+  return buildCodexResumeLink({
+    workspacePath: projection.workspacePath,
+    searchId: projection.search.id,
+    codexThreadId: projection.search.codexThreadId,
+    prefillContinuation,
+  });
 }
 
 export function App() {
@@ -55,9 +58,7 @@ export function App() {
     if (!targetId) return;
     const next = await fetchSearch(targetId);
     setProjection(next);
-    setSelectedNodeId((current) =>
-      current && next.nodes.some((node) => node.id === current) ? current : next.nodes[0]?.id ?? null,
-    );
+    setSelectedNodeId((current) => current && next.nodes.some((node) => node.id === current) ? current : null);
   }, [searchId]);
 
   const handleArtifactUpdated = useCallback(() => {
@@ -71,8 +72,7 @@ export function App() {
         if (cancelled) return;
         setToken(sessionToken);
         const fromUrl = new URLSearchParams(window.location.search).get("search");
-        const initial = list.some((search) => search.id === fromUrl) ? fromUrl : list[0]?.id ?? null;
-        setSearchId(initial);
+        setSearchId(list.some((search) => search.id === fromUrl) ? fromUrl : list[0]?.id ?? null);
       })
       .catch((error: unknown) => {
         if (!cancelled) setNotice({ kind: "error", message: error instanceof Error ? error.message : "Could not load studio" });
@@ -89,6 +89,8 @@ export function App() {
       return;
     }
     setLoading(true);
+    setSelectedNodeId(null);
+    setLiveSession(null);
     setDraftNodeIds(new Set());
     setCompareMode(false);
     const url = new URL(window.location.href);
@@ -104,14 +106,18 @@ export function App() {
   }, [refreshProjection, searchId]);
 
   useEffect(() => {
+    setLiveSession(null);
+    setRestartSignal(0);
+  }, [selectedNodeId]);
+
+  useEffect(() => {
     if (!notice) return;
     const timeout = window.setTimeout(() => setNotice(null), 5000);
     return () => window.clearTimeout(timeout);
   }, [notice]);
 
   useEffect(() => {
-    const defaults = commandDefaults(draftNodeIds.size);
-    setCommandType(defaults.type);
+    setCommandType(commandDefault(draftNodeIds.size));
     if (draftNodeIds.size < 2) setCompareMode(false);
   }, [draftNodeIds.size]);
 
@@ -134,16 +140,15 @@ export function App() {
     });
   };
 
-  const handleEvaluation = async (payload: EvaluationPayload, flag: boolean) => {
+  const handleEvaluation = async (payload: EvaluationPayload) => {
     if (!projection || !token) return;
     setSaving(true);
     try {
       await saveEvaluation(projection.search.id, token, payload);
-      if (flag) setDraftNodeIds((current) => new Set(current).add(payload.nodeId));
       await refreshProjection(projection.search.id);
-      setNotice({ kind: "success", message: flag ? "Evidence saved and branch flagged." : "Playtest evidence saved." });
+      setNotice({ kind: "success", message: "Feedback saved." });
     } catch (error) {
-      setNotice({ kind: "error", message: error instanceof Error ? error.message : "Could not save evaluation" });
+      setNotice({ kind: "error", message: error instanceof Error ? error.message : "Could not save feedback" });
       throw error;
     } finally {
       setSaving(false);
@@ -193,46 +198,63 @@ export function App() {
     }
   };
 
+  const closeNode = useCallback(() => {
+    setSelectedNodeId(null);
+    setCompareMode(false);
+    setLiveSession(null);
+  }, []);
+
+  useEffect(() => {
+    if (!selectedNodeId) return;
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key !== "Escape" || event.defaultPrevented || event.repeat) return;
+      event.preventDefault();
+      closeNode();
+    };
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
+  }, [closeNode, selectedNodeId]);
+
+  const toggleCompare = () => {
+    if (draftedNodes.length !== 2) return;
+    if (!compareMode && !selectedNodeId) setSelectedNodeId(draftedNodes[0]!.id);
+    setCompareMode((current) => !current);
+  };
+
   if (!loading && searches.length === 0) {
     return (
       <main className="welcome-screen">
         <div className="welcome-mark" aria-hidden="true"><span /><span /><span /></div>
         <span className="eyebrow">Local design search</span>
-        <h1>Search for the game<br />before you build it.</h1>
-        <p>There are no searches in this repository yet. Start from Codex, then this studio becomes the playable map of everything you learn.</p>
+        <h1>Find the fun.<br />Keep the evidence.</h1>
+        <p>There are no searches in this repository yet. Start one with Codex, then use this map to play every branch.</p>
         <code>$search-for-fun Start: a one-button game about…</code>
-        <div className="welcome-steps">
-          <span><b>01</b> Define depth</span>
-          <span><b>02</b> Go wide</span>
-          <span><b>03</b> Play + measure</span>
-        </div>
       </main>
     );
   }
 
   return (
-    <div className="app-shell">
+    <div className={`app-shell ${selectedNode ? "node-open" : ""}`}>
       <header className="app-header">
         <a className="brand" href="/" aria-label="Search-for-fun home">
           <span className="brand-glyph" aria-hidden="true"><i /><i /><i /></span>
-          <span>SEARCH<br /><b>FOR FUN</b></span>
+          <span>SEARCH <b>FOR FUN</b></span>
         </a>
         <div className="search-identity">
-          <label htmlFor="search-picker">Active search</label>
+          <label htmlFor="search-picker">Search</label>
           <select id="search-picker" value={searchId ?? ""} onChange={(event) => setSearchId(event.target.value)}>
             {searches.map((search) => <option key={search.id} value={search.id}>{search.title}</option>)}
           </select>
-          {projection && <span>{projection.search.id}</span>}
         </div>
         <div className="header-objective">
-          <span className="eyebrow">Optimizing for</span>
+          <span className="eyebrow">Looking for</span>
           <strong>{projection?.objective.desiredFeeling.join(" · ") ?? "Loading objective"}</strong>
         </div>
         <div className="header-status">
-          <span className={`phase phase-${projection?.search.phase ?? "exploration"}`}>{projection?.search.phase ?? "loading"}</span>
+          <span className="node-total">{projection?.nodes.length ?? 0} nodes</span>
           {projection && (
-            <a className="codex-link" href={resumeLink(projection)}>
-              {pendingCommands > 0 ? `${pendingCommands} pending · Continue in Codex` : "Resume in Codex"}
+            <a className={`codex-link ${pendingCommands > 0 ? "has-pending" : ""}`} href={resumeLink(projection, pendingCommands > 0)}>
+              {pendingCommands > 0 ? `${pendingCommands} pending` : "Resume in Codex"}
               <span aria-hidden="true">↗</span>
             </a>
           )}
@@ -245,125 +267,131 @@ export function App() {
         </div>
       )}
 
-      <main className="studio-layout" aria-busy={loading}>
-        <div className="left-rail">
-          {projection && (
-            <ExplorationGraph
-              nodes={projection.nodes}
-              objective={projection.objective}
-              selectedNodeId={selectedNodeId}
-              draftNodeIds={draftNodeIds}
-              onSelect={setSelectedNodeId}
-              onToggleDraft={toggleDraft}
-            />
-          )}
+      <main className={`map-workspace ${draftNodeIds.size > 0 ? "has-command" : ""}`} aria-busy={loading}>
+        {projection && (
+          <ExplorationGraph
+            nodes={projection.nodes}
+            objective={projection.objective}
+            selectedNodeId={selectedNodeId}
+            draftNodeIds={draftNodeIds}
+            onSelect={setSelectedNodeId}
+            onToggleDraft={toggleDraft}
+          />
+        )}
 
-          <section className={`command-dock ${draftNodeIds.size > 0 ? "open" : ""}`} aria-label="Next search move">
-            <div className="command-count"><b>{String(draftNodeIds.size).padStart(2, "0")}</b><span>branches<br />flagged</span></div>
-            {draftNodeIds.size > 0 ? (
-              <div className="command-body">
-                <div className="command-tabs" role="radiogroup" aria-label="Next move type">
-                  <button role="radio" aria-checked={commandType === "expand"} className={commandType === "expand" ? "active" : ""} onClick={() => setCommandType("expand")}>Expand</button>
-                  <button role="radio" aria-checked={commandType === "cross"} className={commandType === "cross" ? "active" : ""} disabled={draftNodeIds.size < 2} onClick={() => setCommandType("cross")}>Cross</button>
-                  <button role="radio" aria-checked={commandType === "leap"} className={commandType === "leap" ? "active" : ""} onClick={() => setCommandType("leap")}>Leap</button>
-                </div>
-                <textarea
-                  aria-label="Instruction for the next move"
-                  value={commandInstruction}
-                  onChange={(event) => setCommandInstruction(event.target.value)}
-                  placeholder={commandType === "cross" ? "What should survive from each parent?" : "What should the next experiment preserve or change?"}
-                  maxLength={4000}
-                />
-                <div className="command-actions">
-                  <button className="secondary-button" aria-pressed={compareMode} disabled={draftNodeIds.size !== 2} onClick={() => setCompareMode((current) => !current)}>
-                    {compareMode ? "Exit compare" : "Compare"}
-                  </button>
-                  <button className="primary-button" onClick={() => void handleQueueCommand()} disabled={saving || (commandType === "cross" && draftNodeIds.size < 2)}>
-                    Queue move <span aria-hidden="true">→</span>
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <p>Flag promising branches to compose the next experiment.</p>
-            )}
-          </section>
-        </div>
+        {loading && <div className="map-loading" role="status"><span className="status-orbit" />Loading map…</div>}
 
-        <section className="play-column" aria-label="Prototype player">
-          {selectedNode ? (
-            <>
-              <div className="node-toolbar">
-                <div className="node-heading">
-                  <span className={`node-role role-${selectedNode.searchRole}`}>{nodeRoleLabel(selectedNode)}</span>
-                  <div><h1>{selectedNode.title}</h1><span>{selectedNode.id} · generation {selectedNode.generation}</span></div>
-                </div>
-                <div className="node-actions">
-                  <button aria-label="Restart prototype" onClick={() => setRestartSignal((value) => value + 1)} title="Restart prototype">↻ <span>Restart</span></button>
-                  <button aria-pressed={draftNodeIds.has(selectedNode.id)} className={draftNodeIds.has(selectedNode.id) ? "active" : ""} onClick={() => toggleDraft(selectedNode.id)}>◆ <span>{draftNodeIds.has(selectedNode.id) ? "Flagged" : "Flag"}</span></button>
-                  <button
-                    aria-label={selectedNode.effectiveState.favorite ? "Favorite branch" : "Mark branch as favorite"}
-                    aria-pressed={selectedNode.effectiveState.favorite}
-                    className={selectedNode.effectiveState.favorite ? "active" : ""}
-                    disabled={selectedNode.effectiveState.favorite}
-                    onClick={() => void queueDisposition("favorite")}
-                    title={selectedNode.effectiveState.favorite ? "Favorite" : "Mark as favorite"}
-                  >★</button>
-                  <details className="more-actions">
-                    <summary aria-label="More branch actions">•••</summary>
-                    <div>
-                      <button disabled={selectedNode.effectiveState.selected} onClick={() => void queueDisposition("select")}>{selectedNode.effectiveState.selected ? "Candidate selected" : "Select candidate"}</button>
-                      <button disabled={selectedNode.effectiveState.rejected} onClick={() => void queueDisposition("reject")}>{selectedNode.effectiveState.rejected ? "Direction rejected" : "Reject direction"}</button>
-                      <button disabled={selectedNode.effectiveState.archived} onClick={() => void queueDisposition("archive")}>{selectedNode.effectiveState.archived ? "Archived from map" : "Archive from map"}</button>
-                    </div>
-                  </details>
-                </div>
+        {selectedNode && (
+          <section className={`node-expansion ${compareMode ? "compare-active" : ""}`} aria-label={`${selectedNode.title} expanded`}>
+            <button className="close-expansion" aria-keyshortcuts="Escape" title="Close (Esc)" onClick={closeNode}><span aria-hidden="true">←</span> Map</button>
+
+            <aside className="node-explainer">
+              <div className="node-title-block">
+                <span className="node-role">{nodeRoleLabel(selectedNode)}</span>
+                <h1>{selectedNode.title}</h1>
+                <span>{selectedNode.id} · generation {selectedNode.generation}</span>
               </div>
 
-              <div className={`play-stage ${compareMode ? "compare-stage" : ""}`}>
-                {compareMode && draftedNodes.length === 2 ? (
-                  draftedNodes.map((node) => (
-                    <div className="compare-player" key={node.id}>
-                      <span>{node.title}</span>
-                      <PlayerFrame
-                        node={node}
-                        token={token}
-                        restartSignal={restartSignal}
-                        compact
-                        onArtifactUpdated={handleArtifactUpdated}
-                      />
-                    </div>
-                  ))
-                ) : (
-                  <PlayerFrame
-                    key={selectedNode.id}
-                    node={selectedNode}
-                    token={token}
-                    restartSignal={restartSignal}
-                    onSessionChange={setLiveSession}
-                    onArtifactUpdated={handleArtifactUpdated}
-                  />
-                )}
-              </div>
-
-              <div className="hypothesis-strip">
+              <div className="explain-block">
                 <span className="eyebrow">Testing</span>
                 <p>{selectedNode.hypothesis}</p>
-                <span className="instructions">{selectedNode.runtime.actions.join(" + ")} input</span>
               </div>
-            </>
-          ) : (
-            <div className="no-node"><span className="status-orbit" /><h2>No playable nodes yet</h2><p>Continue the search in Codex to create the first three experiments.</p></div>
-          )}
-        </section>
 
-        <EvaluationPanel
-          node={selectedNode}
-          objective={projection?.objective ?? null}
-          session={liveSession}
-          saving={saving}
-          isFlagged={selectedNode ? draftNodeIds.has(selectedNode.id) : false}
-          onSave={handleEvaluation}
-        />
+              {selectedNode.changesFromParents.length > 0 && (
+                <div className="explain-block">
+                  <span className="eyebrow">What changed</span>
+                  <ul>{selectedNode.changesFromParents.slice(0, 3).map((change) => <li key={change}>{change}</li>)}</ul>
+                </div>
+              )}
+
+              <div className="node-facts">
+                <span><b>Controls</b>{selectedNode.runtime.actions.filter((action) => action !== "restart").join(" · ")}</span>
+                <span><b>Playtests</b>{selectedNode.evaluations.length}</span>
+              </div>
+
+              <div className="node-actions">
+                <button onClick={() => setRestartSignal((value) => value + 1)}><span aria-hidden="true">↻</span> Restart</button>
+                <button
+                  aria-pressed={draftNodeIds.has(selectedNode.id)}
+                  className={draftNodeIds.has(selectedNode.id) ? "active" : ""}
+                  onClick={() => toggleDraft(selectedNode.id)}
+                ><span aria-hidden="true">◆</span> {draftNodeIds.has(selectedNode.id) ? "Flagged" : "Flag"}</button>
+                <button
+                  aria-pressed={selectedNode.effectiveState.favorite}
+                  className={selectedNode.effectiveState.favorite ? "active" : ""}
+                  disabled={selectedNode.effectiveState.favorite || saving}
+                  onClick={() => void queueDisposition("favorite")}
+                ><span aria-hidden="true">★</span> Favorite</button>
+              </div>
+
+              <details className="more-actions">
+                <summary>More branch actions</summary>
+                <div>
+                  <button disabled={selectedNode.effectiveState.selected || saving} onClick={() => void queueDisposition("select")}>{selectedNode.effectiveState.selected ? "Candidate selected" : "Select candidate"}</button>
+                  <button disabled={selectedNode.effectiveState.rejected || saving} onClick={() => void queueDisposition("reject")}>{selectedNode.effectiveState.rejected ? "Direction rejected" : "Reject direction"}</button>
+                  <button disabled={selectedNode.effectiveState.archived || saving} onClick={() => void queueDisposition("archive")}>{selectedNode.effectiveState.archived ? "Archived from map" : "Archive from map"}</button>
+                </div>
+              </details>
+            </aside>
+
+            <section className="game-cell" aria-label="Prototype player">
+              <div className="game-cell-heading">
+                <span>{compareMode ? "Side-by-side" : "Playable prototype"}</span>
+                <span>{compareMode ? "Two flagged branches" : `${selectedNode.runtime.viewport.width} × ${selectedNode.runtime.viewport.height}`}</span>
+              </div>
+              {compareMode && draftedNodes.length === 2 ? (
+                <div className="compare-grid">
+                  {draftedNodes.map((node) => (
+                    <div className="compare-player" key={node.id}>
+                      <span>{node.title}</span>
+                      <PlayerFrame node={node} token={token} restartSignal={restartSignal} compact onArtifactUpdated={handleArtifactUpdated} onCloseRequest={closeNode} />
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <PlayerFrame
+                  key={selectedNode.id}
+                  node={selectedNode}
+                  token={token}
+                  restartSignal={restartSignal}
+                  onSessionChange={setLiveSession}
+                  onArtifactUpdated={handleArtifactUpdated}
+                  onCloseRequest={closeNode}
+                />
+              )}
+            </section>
+
+            <EvaluationPanel node={selectedNode} session={liveSession} saving={saving} onSave={handleEvaluation} />
+          </section>
+        )}
+
+        {draftNodeIds.size > 0 && (
+          <form
+            className="command-dock"
+            aria-label="Next search move"
+            onSubmit={(event) => {
+              event.preventDefault();
+              void handleQueueCommand();
+            }}
+          >
+            <div className="command-count"><b>{draftNodeIds.size}</b><span>flagged</span></div>
+            <div className="command-tabs" role="radiogroup" aria-label="Next move type">
+              <button type="button" role="radio" aria-checked={commandType === "expand"} className={commandType === "expand" ? "active" : ""} onClick={() => setCommandType("expand")}>Expand</button>
+              <button type="button" role="radio" aria-checked={commandType === "cross"} className={commandType === "cross" ? "active" : ""} disabled={draftNodeIds.size < 2} onClick={() => setCommandType("cross")}>Cross</button>
+              <button type="button" role="radio" aria-checked={commandType === "leap"} className={commandType === "leap" ? "active" : ""} onClick={() => setCommandType("leap")}>Leap</button>
+            </div>
+            <input
+              aria-label="Instruction for the next move"
+              value={commandInstruction}
+              onChange={(event) => setCommandInstruction(event.target.value)}
+              placeholder={commandType === "cross" ? "What should survive from each?" : "Preserve or change…"}
+              maxLength={4000}
+            />
+            <button type="button" className="secondary-button" aria-pressed={compareMode} disabled={draftNodeIds.size !== 2} onClick={toggleCompare}>{compareMode ? "Stop compare" : "Compare"}</button>
+            <button type="submit" className="primary-button" disabled={saving || (commandType === "cross" && draftNodeIds.size < 2)}>Queue <span aria-hidden="true">→</span></button>
+            <button type="button" className="clear-flags" aria-label="Clear flags" onClick={() => setDraftNodeIds(new Set())}>×</button>
+          </form>
+        )}
       </main>
 
       {notice && <div className={`toast ${notice.kind}`} role={notice.kind === "error" ? "alert" : "status"}>{notice.message}</div>}

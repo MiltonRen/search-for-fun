@@ -58,7 +58,7 @@
             "height": { "type": "integer", "minimum": 240, "maximum": 1920 }
           }
         },
-        "orientation": { "enum": ["landscape", "portrait"] },
+        "orientation": { "enum": ["landscape", "portrait", "square"] },
         "seed": { "type": "integer", "minimum": 0, "maximum": 2147483647 },
         "actions": {
           "type": "array",

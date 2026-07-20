@@ -39,7 +39,6 @@ export interface EvaluationPayload {
   preserve: string;
   change: string;
   note: string;
-  nextMove?: string;
   telemetry?: EvaluationRecord["telemetry"];
 }
 

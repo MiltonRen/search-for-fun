@@ -22,6 +22,7 @@
         "version": { "const": "4000.0.0-alpha.27.1" }
       }
     },
+    "codexThreadId": { "type": "string", "minLength": 8, "maxLength": 120, "pattern": "^[A-Za-z0-9_-]+$" },
     "activeObjectiveRevision": { "type": "integer", "minimum": 1 },
     "nextNodeSequence": { "type": "integer", "minimum": 0 }
   }

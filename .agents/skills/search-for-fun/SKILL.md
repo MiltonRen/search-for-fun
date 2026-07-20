@@ -25,8 +25,8 @@ Run `npm run validate` before mutation. Stop if the selected search is invalid; 
    - session and input constraints;
    - success mode: joy, portfolio, commercial, learning, or custom;
    - the smallest useful playtest measurement.
-3. For commercial searches, begin with `fun`, `appeal`, and `scopeConfidence`; use `readability` and `fantasyFit` as useful components of appeal. For other success modes, tailor the rubric.
-4. Run `npm run search:create --` with explicit arguments. Never hand-author IDs.
+3. Use one numeric rating in the studio: `fun`, scored from one to five stars. Capture readability, appeal, fantasy fit, and scope concerns in the written feedback instead of adding proxy scores.
+4. Run `npm run search:create --` with explicit arguments. Never hand-author IDs. The creation script records `CODEX_THREAD_ID` when available so the studio can return to the originating task.
 5. Create exactly three first-round briefs: **Readable**, **Adjacent**, and **Leap**. All are parentless `root` nodes; the search objective is the virtual graph root.
 6. Read [prototype-contract.md](references/prototype-contract.md), then delegate the three independent briefs to three subagents in parallel when subagents are available. This skill explicitly requests that delegation. If capacity is unavailable, execute the same briefs sequentially. Give every scout a unique directory under `.search-for-fun/staging/`.
 7. Scouts may write only their assigned staging directory. They must produce `game/index.ts`, `result.json`, and `hypothesis.md`.

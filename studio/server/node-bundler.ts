@@ -157,8 +157,8 @@ export async function validateGameSource(repositoryRoot: string, entryPath: stri
     provenance: { briefId: "validation", report: "Validation" },
     runtime: {
       entry: "game/index.ts",
-      viewport: { width: 960, height: 540 },
-      orientation: "landscape",
+      viewport: { width: 640, height: 640 },
+      orientation: "square",
       seed: 1,
       actions: ["primary"],
     },

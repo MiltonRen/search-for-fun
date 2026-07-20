@@ -39,6 +39,7 @@ export type RuntimeEventName =
   | "telemetry"
   | "completed"
   | "failed"
+  | "close_requested"
   | "restart_requested"
   | "restarted"
   | "error"
@@ -81,7 +82,7 @@ export function isRuntimeMessage(value: unknown): value is RuntimeMessage {
     typeof message.nodeId === "string" &&
     typeof message.runId === "number" && Number.isInteger(message.runId) && message.runId >= 0 &&
     typeof message.event === "string" &&
-    ["ready", "started", "telemetry", "completed", "failed", "restart_requested", "restarted", "error", "screenshot", "teardown_complete"].includes(message.event) &&
+    ["ready", "started", "telemetry", "completed", "failed", "close_requested", "restart_requested", "restarted", "error", "screenshot", "teardown_complete"].includes(message.event) &&
     typeof message.atMs === "number" && Number.isFinite(message.atMs) && message.atMs >= 0 &&
     (message.name === undefined || typeof message.name === "string") &&
     (message.reason === undefined || typeof message.reason === "string") &&

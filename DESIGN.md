@@ -329,43 +329,35 @@ The studio is one local web surface with four stable regions:
 
 #### Persistent top bar
 
-- Search name and ID
-- Current node ID
-- Parent breadcrumb
-- Node status
-- Play/restart
-- Flag for expansion
-- Reject/archive
-- Compare
+- Search name
+- Search status
+- Node count
 - Resume in Codex
 
 #### Exploration graph
 
+- Fullscreen default workspace
 - Nodes arranged primarily by generation
 - Directed edges representing derivation
 - Visible edge type
-- Current selection
+- Click-to-expand selection that visually collapses the remaining graph
 - Status and evidence indicators
 
 #### Play surface
 
+- Expanded square widget centered on the selected graph node
 - Sandboxed KAPLAY game
 - Standard viewport and focus behavior
 - Restart control
-- Optional instructions overlay
-- Session timer
 - Error state if the node fails to boot
 
 #### Evaluation surface
 
-- Quick structured ratings
-- Freeform observation
-- What should be preserved
-- What should change
-- Desired next move
+- One one-to-five-star fun rating
+- One freeform feedback field
 - Prior playtest sessions
 
-The MVP may collapse the graph and evaluation surface into drawers on narrow widths. The play surface remains primary.
+The expanded node uses a short explanation panel on the left, a square play surface in the center, and feedback on the right. Narrow widths stack those surfaces while keeping the map as the default view.
 
 ### 8.3 Node actions
 
@@ -651,6 +643,7 @@ search-for-fun/
   "phase": "exploration",
   "createdAt": "2026-07-19T20:00:00Z",
   "updatedAt": "2026-07-19T20:00:00Z",
+  "codexThreadId": "019f7e42-c2bd-7170-a69a-901ec4c097c7",
   "engine": {
     "name": "kaplay",
     "version": "4000.0.0-alpha.27.1"
@@ -659,6 +652,8 @@ search-for-fun/
   "nextNodeSequence": 4
 }
 ```
+
+`codexThreadId` is optional provenance captured from the creating Codex task. It lets the studio return to that task without making conversation history canonical search state.
 
 Objective revisions are immutable records under `objectives/`. For example, `objectives/rev_0001.json` contains the `searchId`, revision, creation time, success mode, fantasy, desired feelings, session range, constraints, rubric, and optional references, avoidance patterns, and innovation target.
 
@@ -692,8 +687,8 @@ Objective revisions are immutable records under `objectives/`. For example, `obj
   },
   "runtime": {
     "entry": "game/index.ts",
-    "viewport": { "width": 960, "height": 540 },
-    "orientation": "landscape",
+    "viewport": { "width": 640, "height": 640 },
+    "orientation": "square",
     "seed": 41832,
     "actions": ["primary", "restart"]
   },
@@ -727,16 +722,10 @@ Raw evaluations are append-only and retain their source.
     "restarts": 3,
     "completed": true
   },
-  "ratings": {
-    "fun": 4,
-    "appeal": 4,
-    "readability": 2,
-    "fantasyFit": 5,
-    "scopeConfidence": 3
-  },
-  "preserve": "The beam visibly weakening as power drops.",
-  "change": "The three meters are too difficult to parse while playing.",
-  "note": "Try one shared resource with more physical consequences."
+  "ratings": { "fun": 4 },
+  "preserve": "",
+  "change": "",
+  "note": "The weakening beam feels great, but the three meters are too difficult to parse while playing."
 }
 ```
 
@@ -822,8 +811,8 @@ export function createKaplayRuntime(canvas: HTMLCanvasElement): KAPLAYCtx {
   return kaplay({
     global: false,
     canvas,
-    width: 960,
-    height: 540,
+    width: 640,
+    height: 640,
     letterbox: true,
     focus: true,
     debug: false,
@@ -899,12 +888,12 @@ Initial prototypes should prefer `primary` and directional actions over raw key 
 
 ### 13.6 Viewport policy
 
-- Default logical viewport: 960 × 540.
+- Default logical viewport: 640 × 640.
 - Letterboxing preserves aspect ratio.
 - The studio may scale the iframe visually, but the prototype retains logical dimensions.
 - Compare mode runs at reduced visual size without changing game coordinates.
 - Pixel-art nodes may request crisp rendering through validated runtime options.
-- A node may request portrait orientation, but the first MVP demo targets landscape.
+- A node may request landscape or portrait orientation when the experiment requires it, but square is the default.
 
 ### 13.7 Asset policy
 
@@ -1087,28 +1076,27 @@ The graph is a navigation and reasoning surface, not a general-purpose node edit
 - Console errors are captured and shown outside the game iframe.
 - The studio records boot time and runtime crashes.
 - Compare mode may run two nodes, but only the focused iframe receives controls and audio.
+- Escape closes the expanded node, including while its game iframe has keyboard focus.
 
 ### 15.6 Evaluation interaction
 
 The quick path should take less than a minute after playing:
 
-1. Rate the active rubric dimensions from 1–5 or mark “not measured.”
-2. State one thing to preserve.
-3. State one thing to change.
-4. Optionally request a next move.
-5. Save and flag.
+1. Rate fun from one to five stars.
+2. Write concise feedback about what felt good or got in the way.
+3. Press Enter to save; use Shift+Enter when the feedback needs another line.
 
-Ratings are never required to be exhaustive. A prototype can be useful because it invalidates one hypothesis.
+Flagging a branch remains a separate map action. A prototype can be useful because it invalidates one hypothesis even when its fun score is low.
 
 ### 15.7 Codex bridge
 
 For the MVP, the bridge is file-based:
 
 1. Studio writes a pending command.
-2. User returns to the current Codex task and asks to continue.
+2. Studio highlights pending work; the user opens a Codex task with the continuation prompt prefilled.
 3. The skill reads and processes pending commands.
 
-A “Resume in Codex” link may open a new local task with the repository path and prefilled prompt. It does not silently send a message or start agent work.
+With no pending work, “Resume in Codex” opens the stored originating task. Pending work uses a new local task with the repository path and continuation prompt prefilled because existing-thread deep links do not accept composer text. The link does not silently send a message or start agent work.
 
 An MCP-backed UI can later replace the explicit handoff if direct structured tool calls become essential.
 
@@ -1151,17 +1139,9 @@ The implementation may use server-sent updates or Vite reload behavior for local
 
 ### 17.1 Human evaluation
 
-Human feedback is the primary measurement for subjective qualities. Default rubric dimensions are:
+Human feedback is the primary measurement for subjective qualities. The default and only quick numeric rating is **Fun:** did the interaction create engagement or a desire to continue? Readability, fantasy fit, flow, replayability, novelty, and scope confidence remain important diagnostic questions, but they are recorded through written feedback, telemetry, and critique instead of additional pseudo-precise scores.
 
-- **Fun:** Did the interaction create engagement or a desire to continue?
-- **Readability:** Was the goal and action understandable quickly?
-- **Fantasy fit:** Did the experience deliver the promised role or feeling?
-- **Flow:** Did challenge feel appropriately matched to comprehension and control?
-- **Replayability:** Did the player want another attempt?
-- **Novelty:** Did the branch reveal something meaningfully different?
-- **Scope confidence:** Does the idea appear finishable at the intended quality?
-
-The search objective selects the active subset. Scores from different objective revisions are not treated as directly equivalent without an explicit comparison.
+Scores from different objective revisions are not treated as directly equivalent without an explicit comparison.
 
 ### 17.2 Behavioral evidence
 

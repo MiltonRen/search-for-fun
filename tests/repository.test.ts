@@ -18,7 +18,7 @@ describe("canonical fixture", () => {
   it("validates a three-root search with a multi-parent child", async () => {
     const root = await findRepositoryRoot();
     const repository = await SearchRepository.create(root);
-    const searchId = "s_20260720_lighthouse_in_a_storm";
+    const searchId = "s_20260720_chrome_nightfall";
     expect(await repository.validateSearch(searchId)).toEqual([]);
     const projection = await repository.loadProjection(searchId);
     expect(projection.nodes.filter((node) => node.edgeType === "root")).toHaveLength(3);
@@ -29,10 +29,10 @@ describe("canonical fixture", () => {
   it("typechecks and bundles a sealed KAPLAY node on demand", async () => {
     const root = await findRepositoryRoot();
     const cache = new NodeBundleCache(root);
-    const bundle = await cache.get("s_20260720_lighthouse_in_a_storm", "n_0000_beam_rhythm");
+    const bundle = await cache.get("s_20260720_chrome_nightfall", "n_0000_chrome_rush");
     expect(bundle.hash).toMatch(/^[a-f0-9]{64}$/);
     expect(bundle.code.byteLength).toBeGreaterThan(50_000);
-    expect(Buffer.from(bundle.code).toString("utf8")).toContain("Beam Rhythm");
+    expect(Buffer.from(bundle.code).toString("utf8")).toContain("Chrome Rush");
   });
 
   it("rejects prototype dependencies outside the shared KAPLAY runtime", async () => {

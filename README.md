@@ -17,11 +17,11 @@ Open [http://127.0.0.1:4317](http://127.0.0.1:4317). The included **Lighthouse i
 
 Use the studio to:
 
-- select a branch from the map or accessible list view;
-- play or restart it in the shared sandboxed KAPLAY host;
-- rate the current objective rubric and save observations;
+- explore the fullscreen map and click a branch to expand it;
+- play its square prototype between a short explanation and feedback panel;
+- give one one-to-five-star fun rating and quick written feedback;
 - flag one or more branches, compare two, and queue an expand, cross, or leap command; and
-- return to Codex through the prefilled **Resume in Codex** link.
+- use the highlighted pending-work button to open a prefilled Codex continuation task; when no work is pending, **Resume in Codex** returns to the originating task when known.
 
 ## Run a design search with Codex
 

@@ -23,6 +23,7 @@ interface PlayerFrameProps {
   compact?: boolean;
   onSessionChange?(session: LivePlaySession): void;
   onArtifactUpdated?(): void;
+  onCloseRequest?(): void;
 }
 
 function createSession(id = crypto.randomUUID()): LivePlaySession {
@@ -112,6 +113,11 @@ export function PlayerFrame(props: PlayerFrameProps) {
         message.nodeId !== props.node.id
       ) return;
 
+      if (message.event === "close_requested") {
+        props.onCloseRequest?.();
+        return;
+      }
+
       if (message.event === "ready") {
         setStatus("ready");
         setError(null);
@@ -162,7 +168,7 @@ export function PlayerFrame(props: PlayerFrameProps) {
     };
     window.addEventListener("message", onMessage);
     return () => window.removeEventListener("message", onMessage);
-  }, [emitSession, identity.nonce, props.node.id, props.node.previewUrl, props.node.searchId, props.onArtifactUpdated, props.token, reportFailure, sendControl]);
+  }, [emitSession, identity.nonce, props.node.id, props.node.previewUrl, props.node.searchId, props.onArtifactUpdated, props.onCloseRequest, props.token, reportFailure, sendControl]);
 
   useEffect(() => () => sendControl("teardown"), [identity.sessionId, sendControl]);
 

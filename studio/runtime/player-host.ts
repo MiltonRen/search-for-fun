@@ -58,6 +58,14 @@ export function bootstrapNode(game: SearchForFunGame, options: BootstrapOptions)
     window.parent.postMessage(payload, "*");
   };
 
+  const requestClose = (event: KeyboardEvent): void => {
+    if (event.key !== "Escape" || event.repeat) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    post({ event: "close_requested" });
+  };
+  window.addEventListener("keydown", requestClose, true);
+
   const makeApi = (): PlaytestApi => ({
     ready() {
       if (ready) return;
@@ -162,6 +170,7 @@ export function bootstrapNode(game: SearchForFunGame, options: BootstrapOptions)
   window.addEventListener("error", (event) => reportRuntimeError(event.error ?? event.message));
   window.addEventListener("unhandledrejection", (event) => reportRuntimeError(event.reason));
   window.addEventListener("beforeunload", () => {
+    window.removeEventListener("keydown", requestClose, true);
     console.error = originalConsoleError;
     if (!tearingDown) active?.k.quit();
   });
