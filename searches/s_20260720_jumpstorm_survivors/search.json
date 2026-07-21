@@ -5,12 +5,12 @@
   "status": "exploring",
   "phase": "exploration",
   "createdAt": "2026-07-20T21:25:07.447Z",
-  "updatedAt": "2026-07-20T22:31:32.429Z",
+  "updatedAt": "2026-07-21T03:13:28.178Z",
   "engine": {
     "name": "kaplay",
     "version": "4000.0.0-alpha.27.1"
   },
   "codexThreadId": "019f8169-f4fb-7102-9f02-939126f07927",
   "activeObjectiveRevision": 1,
-  "nextNodeSequence": 6
+  "nextNodeSequence": 12
 }

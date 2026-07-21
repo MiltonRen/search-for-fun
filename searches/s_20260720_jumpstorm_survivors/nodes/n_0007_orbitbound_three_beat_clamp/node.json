@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "id": "n_0007_orbitbound_three_beat_clamp",
+  "searchId": "s_20260720_jumpstorm_survivors",
+  "parents": [
+    "n_0005_orbitbound_visible_ring_clamp"
+  ],
+  "generation": 2,
+  "edgeType": "refine",
+  "searchRole": "refinement",
+  "lifecycleStatus": "sealed",
+  "objectiveRevision": 1,
+  "createdAt": "2026-07-21T02:02:08.494Z",
+  "sealedAt": "2026-07-21T02:02:08.494Z",
+  "title": "Orbitbound: Three-Beat Clamp",
+  "hypothesis": "Three short, vocabulary-consistent clamp variations will make hazard pressure faster to parse and more dynamic by alternating radial, orbital, and combined movement demands without changing Orbitbound's combat or growth loop.",
+  "changesFromParents": [
+    "Replaces the repeating whole-ring clamp with a lean three-beat cycle: a local pincer, a moving ring sweep, and a three-lane rake with one adjacent safe lane.",
+    "Front-loads all three variations by roughly 12 seconds, with 1.35 to 1.75 second warnings and sparse action-first labels.",
+    "Separates warning, response, hit, and evasion telemetry by hazard variation."
+  ],
+  "preserve": [
+    "exactly four concentric movement lanes",
+    "left and right orbit movement",
+    "up and down radial hops with readable transition safety",
+    "automatic targeting and volley attacks",
+    "continuous pickup and timed-milestone power growth",
+    "four health and a 100-second run",
+    "deterministic seed 68420317",
+    "640 by 640 keyboard play",
+    "sparse grayscale geometry with one teal accent"
+  ],
+  "provenance": {
+    "briefId": "cmd-9ad7e483-orbit-hazard-variations",
+    "report": "Responds to the 2/5, 77-second note asking for a more streamlined and dynamic version. The repeated whole-ring punishment becomes one concise visual grammar with three early variations. PINCH converges locally and accepts an orbit or hop; SWEEP visibly travels into the warned angle and asks for sustained orbit or a hop; RAKE moves three aligned teeth while marking one adjacent lane open. The first warnings begin near 1.8, 5.7, and 9.6 seconds, so all variations are exposed well inside 20 seconds. Warnings, first hop/orbit responses, hits, and evasions all identify the variation. Controls, transition safety, automatic combat, pickup and timed power growth, health, duration, seed, viewport, and art language remain controlled."
+  },
+  "runtime": {
+    "entry": "game/index.ts",
+    "viewport": {
+      "width": 640,
+      "height": 640
+    },
+    "orientation": "square",
+    "seed": 68420317,
+    "actions": [
+      "left",
+      "right",
+      "up",
+      "down",
+      "restart"
+    ]
+  },
+  "validation": {
+    "schema": "passed",
+    "typecheck": "passed",
+    "bundle": "passed",
+    "boot": "passed",
+    "consoleErrors": 0,
+    "screenshot": "preview.png"
+  }
+}

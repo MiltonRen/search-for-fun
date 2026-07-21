@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "id": "n_0006_pogo_storm_power_relay",
+  "searchId": "s_20260720_jumpstorm_survivors",
+  "parents": [
+    "n_0003_pogo_storm_three_beats"
+  ],
+  "generation": 2,
+  "edgeType": "refine",
+  "searchRole": "refinement",
+  "lifecycleStatus": "sealed",
+  "objectiveRevision": 1,
+  "createdAt": "2026-07-21T02:01:59.903Z",
+  "sealedAt": "2026-07-21T02:01:59.903Z",
+  "title": "Pogo Storm: Power Relay",
+  "hypothesis": "Three fast, automatically collected power relays with immediately distinct effects will make Pogo Storm's progression legible and give the player something exciting to anticipate without interrupting its bounce rhythm.",
+  "changesFromParents": [
+    "Replace incremental orbit growth with three named in-motion power relays: Capacitor widens landing waves, Lancer auto-strikes the nearest threat, and Phase Guard converts the next contact into a crush.",
+    "Deliver the relays sequentially at roughly 1, 6, and 10 seconds with homing pickups, compact HUD state, and separate acquisition/trigger telemetry so all three effects can be compared before the prior run's second-13 failure point."
+  ],
+  "preserve": [
+    "automatic launch-and-land pogo arcs",
+    "left/right air steering and primary stomp timing",
+    "landing shockwaves and five-health contact/rough-landing pressure",
+    "the repeating ground-skitter, hover-weave, and telegraphed charger encounter beats",
+    "the parent's approximate enemy density, 84-second run, and deterministic seed 1729031",
+    "primitive grayscale geometry with one restrained gold accent",
+    "one authoritative player with attached visible body, halo, spring, boot, guard, and weapon visuals",
+    "640 by 640 keyboard-only play"
+  ],
+  "provenance": {
+    "briefId": "cmd-9ad7e483-pogo-power-variations",
+    "report": "Responds narrowly to the 3/5, 22.4-second note 'come up with power ups.' The prior session reached all three threat beats but ended at second 13, so the three relays launch early and home rapidly to the moving player: Capacitor around second 1, Lancer around second 6, and Phase Guard around second 10, with collection shortly afterward. Each acquisition immediately demonstrates or arms a visibly distinct effect without pausing play. Small power_acquired and power_trigger events, plus arrays in end-state telemetry, distinguish exposure from use. Enemy patterns, automatic pogo motion, stomp timing, health model, pressure, run length, seed, viewport, and grayscale-plus-gold presentation remain controlled."
+  },
+  "runtime": {
+    "entry": "game/index.ts",
+    "viewport": {
+      "width": 640,
+      "height": 640
+    },
+    "orientation": "square",
+    "seed": 1729031,
+    "actions": [
+      "left",
+      "right",
+      "primary",
+      "restart"
+    ]
+  },
+  "validation": {
+    "schema": "passed",
+    "typecheck": "passed",
+    "bundle": "passed",
+    "boot": "passed",
+    "consoleErrors": 0,
+    "screenshot": "preview.png"
+  }
+}

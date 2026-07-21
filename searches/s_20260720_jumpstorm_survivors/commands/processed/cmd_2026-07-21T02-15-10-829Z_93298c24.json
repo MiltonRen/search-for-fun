@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "cmd_2026-07-21T02-15-10-829Z_93298c24",
+  "type": "cross",
+  "searchId": "s_20260720_jumpstorm_survivors",
+  "nodeIds": [
+    "n_0007_orbitbound_three_beat_clamp",
+    "n_0006_pogo_storm_power_relay"
+  ],
+  "mode": "crossover",
+  "instruction": "Figure out a way to combine these 2 ideas",
+  "createdAt": "2026-07-21T02:15:10.829Z",
+  "createdBy": "studio",
+  "status": "processed",
+  "result": {
+    "completedAt": "2026-07-21T02:32:22.297Z",
+    "nodeIds": [
+      "n_0009_orbitstorm_visible_evasion_relay"
+    ],
+    "summary": "Created one crossover that preserves four-ring Pinch/Sweep/Rake movement and converts the first three successful evasions into Capacitor, Lancer, and Phase Guard unlocks, removing power pickups entirely. Live two-pass checks confirmed visible rings/HUD, player and attachment motion, moving enemies and hazards, restart, first-evasion Capacitor unlock, preview capture, and zero console errors. Sealed n_0008 was excluded after its persistent background occluded immediate-mode rings and HUD; n_0009 repairs only that rendering issue."
+  }
+}

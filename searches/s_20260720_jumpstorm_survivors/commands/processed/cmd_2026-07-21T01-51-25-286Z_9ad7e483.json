@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "cmd_2026-07-21T01-51-25-286Z_9ad7e483",
+  "type": "expand",
+  "searchId": "s_20260720_jumpstorm_survivors",
+  "nodeIds": [
+    "n_0003_pogo_storm_three_beats",
+    "n_0005_orbitbound_visible_ring_clamp"
+  ],
+  "mode": "parallel",
+  "instruction": "try 3 variations for each node",
+  "createdAt": "2026-07-21T01:51:25.286Z",
+  "createdBy": "studio",
+  "status": "processed",
+  "result": {
+    "completedAt": "2026-07-21T02:06:40.577Z",
+    "nodeIds": [
+      "n_0006_pogo_storm_power_relay",
+      "n_0007_orbitbound_three_beat_clamp"
+    ],
+    "summary": "Created two parallel refinements, each exercising three in-run variations: Pogo Storm adds Capacitor, Lancer, and Phase Guard relays before the prior failure point; Orbitbound replaces repeated whole-ring clamps with Pinch, Sweep, and Rake beats within about 12 seconds. Schema, typecheck, bundle, boot, screenshot, two-pass visible player/attachment/threat motion, restart, and zero-console-error checks passed."
+  }
+}

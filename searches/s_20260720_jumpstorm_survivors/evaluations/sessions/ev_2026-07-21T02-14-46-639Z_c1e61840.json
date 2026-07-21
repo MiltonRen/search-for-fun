@@ -1,0 +1,387 @@
+{
+  "schemaVersion": 1,
+  "id": "ev_2026-07-21T02-14-46-639Z_c1e61840",
+  "type": "human_playtest",
+  "searchId": "s_20260720_jumpstorm_survivors",
+  "nodeId": "n_0007_orbitbound_three_beat_clamp",
+  "objectiveRevision": 1,
+  "createdAt": "2026-07-21T02:14:46.639Z",
+  "session": {
+    "id": "b55bb6db-1b4a-49c1-9fc9-90b386a141ec",
+    "durationSeconds": 29,
+    "restarts": 0,
+    "completed": false
+  },
+  "ratings": {
+    "fun": 4
+  },
+  "preserve": "",
+  "change": "",
+  "note": "",
+  "telemetry": [
+    {
+      "name": "first_input",
+      "atMs": 591,
+      "properties": {
+        "action": "right",
+        "elapsed_ms": 0
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 924,
+      "properties": {
+        "kind": "lane_hop",
+        "from_lane": 3,
+        "to_lane": 2,
+        "direction": "in",
+        "airborne_near_enemy": false,
+        "hazard_variation": "none",
+        "elapsed_s": 0.3
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 1856,
+      "properties": {
+        "kind": "lane_hop",
+        "from_lane": 2,
+        "to_lane": 1,
+        "direction": "in",
+        "airborne_near_enemy": false,
+        "hazard_variation": "none",
+        "elapsed_s": 1.3
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 2383,
+      "properties": {
+        "kind": "hazard_warning",
+        "variation": "pinch",
+        "wave": 1,
+        "target_lane": 1,
+        "safe_lane": null,
+        "warning_s": 1.35,
+        "elapsed_s": 1.8
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 2565,
+      "properties": {
+        "kind": "hazard_response",
+        "variation": "pinch",
+        "response": "orbit",
+        "wave": 1,
+        "elapsed_s": 2
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 2624,
+      "properties": {
+        "kind": "hazard_response",
+        "variation": "pinch",
+        "response": "lane_hop",
+        "wave": 1,
+        "elapsed_s": 2
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 2624,
+      "properties": {
+        "kind": "lane_hop",
+        "from_lane": 1,
+        "to_lane": 2,
+        "direction": "out",
+        "airborne_near_enemy": false,
+        "hazard_variation": "pinch",
+        "elapsed_s": 2
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 3565,
+      "properties": {
+        "kind": "lane_hop",
+        "from_lane": 2,
+        "to_lane": 1,
+        "direction": "in",
+        "airborne_near_enemy": false,
+        "hazard_variation": "pinch",
+        "elapsed_s": 3
+      }
+    },
+    {
+      "name": "goal",
+      "atMs": 3724,
+      "properties": {
+        "kind": "hazard_evaded",
+        "variation": "pinch",
+        "wave": 1,
+        "response": "hop_and_orbit",
+        "end_lane": 2,
+        "elapsed_s": 3.1
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 4665,
+      "properties": {
+        "kind": "lane_hop",
+        "from_lane": 1,
+        "to_lane": 2,
+        "direction": "out",
+        "airborne_near_enemy": false,
+        "hazard_variation": "none",
+        "elapsed_s": 4.1
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 5099,
+      "properties": {
+        "kind": "lane_hop",
+        "from_lane": 2,
+        "to_lane": 3,
+        "direction": "out",
+        "airborne_near_enemy": false,
+        "hazard_variation": "none",
+        "elapsed_s": 4.5
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 5982,
+      "properties": {
+        "kind": "lane_hop",
+        "from_lane": 3,
+        "to_lane": 4,
+        "direction": "out",
+        "airborne_near_enemy": false,
+        "hazard_variation": "none",
+        "elapsed_s": 5.4
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 6282,
+      "properties": {
+        "kind": "hazard_warning",
+        "variation": "sweep",
+        "wave": 2,
+        "target_lane": 3,
+        "safe_lane": null,
+        "warning_s": 1.65,
+        "elapsed_s": 5.7
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 7090,
+      "properties": {
+        "kind": "hazard_response",
+        "variation": "sweep",
+        "response": "orbit",
+        "wave": 2,
+        "elapsed_s": 6.5
+      }
+    },
+    {
+      "name": "goal",
+      "atMs": 7924,
+      "properties": {
+        "kind": "hazard_evaded",
+        "variation": "sweep",
+        "wave": 2,
+        "response": "orbit",
+        "end_lane": 4,
+        "elapsed_s": 7.3
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 10183,
+      "properties": {
+        "kind": "hazard_warning",
+        "variation": "rake",
+        "wave": 3,
+        "target_lane": 4,
+        "safe_lane": 3,
+        "warning_s": 1.75,
+        "elapsed_s": 9.6
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 11823,
+      "properties": {
+        "kind": "hazard_response",
+        "variation": "rake",
+        "response": "orbit",
+        "wave": 3,
+        "elapsed_s": 11.2
+      }
+    },
+    {
+      "name": "goal",
+      "atMs": 11924,
+      "properties": {
+        "kind": "hazard_evaded",
+        "variation": "rake",
+        "wave": 3,
+        "response": "orbit",
+        "end_lane": 4,
+        "elapsed_s": 11.3
+      }
+    },
+    {
+      "name": "goal",
+      "atMs": 12607,
+      "properties": {
+        "kind": "power_up",
+        "power_level": 2,
+        "source": "pickup",
+        "kills": 10,
+        "elapsed_s": 12
+      }
+    },
+    {
+      "name": "damage",
+      "atMs": 14081,
+      "properties": {
+        "source": "enemy_contact",
+        "health": 3,
+        "elapsed_s": 13,
+        "lane": 4
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 15533,
+      "properties": {
+        "kind": "hazard_warning",
+        "variation": "pinch",
+        "wave": 4,
+        "target_lane": 4,
+        "safe_lane": null,
+        "warning_s": 1.35,
+        "elapsed_s": 15
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 15699,
+      "properties": {
+        "kind": "hazard_response",
+        "variation": "pinch",
+        "response": "orbit",
+        "wave": 4,
+        "elapsed_s": 15.1
+      }
+    },
+    {
+      "name": "goal",
+      "atMs": 16882,
+      "properties": {
+        "kind": "hazard_evaded",
+        "variation": "pinch",
+        "wave": 4,
+        "response": "orbit",
+        "end_lane": 4,
+        "elapsed_s": 16.3
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 19190,
+      "properties": {
+        "kind": "lane_hop",
+        "from_lane": 4,
+        "to_lane": 3,
+        "direction": "in",
+        "airborne_near_enemy": false,
+        "hazard_variation": "none",
+        "elapsed_s": 18.6
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 19957,
+      "properties": {
+        "kind": "lane_hop",
+        "from_lane": 3,
+        "to_lane": 2,
+        "direction": "in",
+        "airborne_near_enemy": false,
+        "hazard_variation": "none",
+        "elapsed_s": 19.4
+      }
+    },
+    {
+      "name": "goal",
+      "atMs": 20324,
+      "properties": {
+        "kind": "power_up",
+        "power_level": 3,
+        "source": "pickup",
+        "kills": 20,
+        "elapsed_s": 20
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 20849,
+      "properties": {
+        "kind": "hazard_warning",
+        "variation": "sweep",
+        "wave": 5,
+        "target_lane": 2,
+        "safe_lane": null,
+        "warning_s": 1.65,
+        "elapsed_s": 20.3
+      }
+    },
+    {
+      "name": "damage",
+      "atMs": 22499,
+      "properties": {
+        "source": "ring_hazard",
+        "variation": "sweep",
+        "wave": 5,
+        "response": "none",
+        "absorbed": false,
+        "health": 2,
+        "elapsed_s": 21.9
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 26133,
+      "properties": {
+        "kind": "hazard_warning",
+        "variation": "rake",
+        "wave": 6,
+        "target_lane": 2,
+        "safe_lane": 3,
+        "warning_s": 1.75,
+        "elapsed_s": 25.6
+      }
+    },
+    {
+      "name": "damage",
+      "atMs": 27874,
+      "properties": {
+        "source": "ring_hazard",
+        "variation": "rake",
+        "wave": 6,
+        "response": "none",
+        "absorbed": false,
+        "health": 1,
+        "elapsed_s": 27.3
+      }
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "cmd_2026-07-21T02-41-57-089Z_9f687968",
+  "type": "expand",
+  "searchId": "s_20260720_jumpstorm_survivors",
+  "nodeIds": [
+    "n_0006_pogo_storm_power_relay"
+  ],
+  "mode": "single",
+  "instruction": "amplify this game mode",
+  "createdAt": "2026-07-21T02:41:57.089Z",
+  "createdBy": "studio",
+  "status": "processed",
+  "result": {
+    "completedAt": "2026-07-21T02:55:44.282Z",
+    "nodeIds": [
+      "n_0010_pogo_storm_relay_overdrive"
+    ],
+    "summary": "Imported and live-verified Pogo Storm: Relay Overdrive. Removed following pickup actors, scheduled direct power ignition at 1.7/5.7/9.7s, and amplified Capacitor echoes, Lancer chains, and rechargeable Phase contact detonation. Two-direction motion, all unlocks, powered stomp, Phase conversion, full 84-second completion, boot capture, and zero console errors passed."
+  }
+}

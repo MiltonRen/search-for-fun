@@ -1,0 +1,347 @@
+{
+  "schemaVersion": 1,
+  "id": "ev_2026-07-21T02-57-33-724Z_5301e1c6",
+  "type": "human_playtest",
+  "searchId": "s_20260720_jumpstorm_survivors",
+  "nodeId": "n_0010_pogo_storm_relay_overdrive",
+  "objectiveRevision": 1,
+  "createdAt": "2026-07-21T02:57:33.724Z",
+  "session": {
+    "id": "307bf326-b07b-496a-8b18-a663a06bf860",
+    "durationSeconds": 59.7,
+    "restarts": 0,
+    "completed": false
+  },
+  "ratings": {
+    "fun": 4
+  },
+  "preserve": "",
+  "change": "",
+  "note": "almost there - just need an auto-recovery energy bar so you can't spam space; also make the enemy horde crazy as time go by (1-100 in 30 seconds increase linear with periodical sudden waves of enemies",
+  "telemetry": [
+    {
+      "name": "first_input",
+      "atMs": 970,
+      "properties": {
+        "method": "primary"
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 970,
+      "properties": {
+        "kind": "encounter_pattern",
+        "pattern": "skitter",
+        "second": 0
+      }
+    },
+    {
+      "name": "damage",
+      "atMs": 2612,
+      "properties": {
+        "source": "contact",
+        "health": 4,
+        "powers": 0,
+        "second": 1,
+        "pattern": "skitter"
+      }
+    },
+    {
+      "name": "power_unlock",
+      "atMs": 2663,
+      "properties": {
+        "power": "capacitor",
+        "count": 1,
+        "second": 1.7
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 3387,
+      "properties": {
+        "kind": "stomp",
+        "height": 39,
+        "powers": 1,
+        "second": 2
+      }
+    },
+    {
+      "name": "power_trigger",
+      "atMs": 3429,
+      "properties": {
+        "power": "capacitor",
+        "effect": "landing_wave_with_delayed_echo",
+        "cleared": 0,
+        "second": 2.5
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 4487,
+      "properties": {
+        "kind": "stomp",
+        "height": 74,
+        "powers": 1,
+        "second": 3
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 4887,
+      "properties": {
+        "kind": "stomp",
+        "height": 87,
+        "powers": 1,
+        "second": 3
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 5162,
+      "properties": {
+        "kind": "stomp",
+        "height": 57,
+        "powers": 1,
+        "second": 4
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 5420,
+      "properties": {
+        "kind": "stomp",
+        "height": 64,
+        "powers": 1,
+        "second": 4
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 5778,
+      "properties": {
+        "kind": "stomp",
+        "height": 84,
+        "powers": 1,
+        "second": 4
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 6153,
+      "properties": {
+        "kind": "stomp",
+        "height": 82,
+        "powers": 1,
+        "second": 5
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 6363,
+      "properties": {
+        "kind": "encounter_pattern",
+        "pattern": "hover",
+        "second": 5
+      }
+    },
+    {
+      "name": "power_unlock",
+      "atMs": 6662,
+      "properties": {
+        "power": "lancer",
+        "count": 2,
+        "second": 5.7
+      }
+    },
+    {
+      "name": "power_trigger",
+      "atMs": 6738,
+      "properties": {
+        "power": "lancer",
+        "effect": "triple_chain_auto_strike",
+        "cleared": 3,
+        "second": 5.8
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 7437,
+      "properties": {
+        "kind": "stomp",
+        "height": 92,
+        "powers": 2,
+        "second": 6
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 7720,
+      "properties": {
+        "kind": "stomp",
+        "height": 57,
+        "powers": 2,
+        "second": 6
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 8004,
+      "properties": {
+        "kind": "stomp",
+        "height": 70,
+        "powers": 2,
+        "second": 7
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 9120,
+      "properties": {
+        "kind": "stomp",
+        "height": 66,
+        "powers": 2,
+        "second": 8
+      }
+    },
+    {
+      "name": "power_unlock",
+      "atMs": 10662,
+      "properties": {
+        "power": "phase",
+        "count": 3,
+        "second": 9.7
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 11771,
+      "properties": {
+        "kind": "encounter_pattern",
+        "pattern": "charger",
+        "second": 10
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 12795,
+      "properties": {
+        "kind": "stomp",
+        "height": 79,
+        "powers": 3,
+        "second": 11
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 13170,
+      "properties": {
+        "kind": "stomp",
+        "height": 82,
+        "powers": 3,
+        "second": 12
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 13795,
+      "properties": {
+        "kind": "stomp",
+        "height": 91,
+        "powers": 3,
+        "second": 12
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 14045,
+      "properties": {
+        "kind": "stomp",
+        "height": 49,
+        "powers": 3,
+        "second": 13
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 14345,
+      "properties": {
+        "kind": "stomp",
+        "height": 76,
+        "powers": 3,
+        "second": 13
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 17170,
+      "properties": {
+        "kind": "encounter_pattern",
+        "pattern": "skitter",
+        "second": 16
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 22571,
+      "properties": {
+        "kind": "encounter_pattern",
+        "pattern": "hover",
+        "second": 21
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 27979,
+      "properties": {
+        "kind": "encounter_pattern",
+        "pattern": "charger",
+        "second": 27
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 33387,
+      "properties": {
+        "kind": "encounter_pattern",
+        "pattern": "skitter",
+        "second": 32
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 38787,
+      "properties": {
+        "kind": "encounter_pattern",
+        "pattern": "hover",
+        "second": 37
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 44188,
+      "properties": {
+        "kind": "encounter_pattern",
+        "pattern": "charger",
+        "second": 43
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 49595,
+      "properties": {
+        "kind": "encounter_pattern",
+        "pattern": "skitter",
+        "second": 48
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 54996,
+      "properties": {
+        "kind": "encounter_pattern",
+        "pattern": "hover",
+        "second": 54
+      }
+    }
+  ]
+}

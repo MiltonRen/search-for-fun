@@ -1,0 +1,159 @@
+{
+  "schemaVersion": 1,
+  "id": "ev_2026-07-21T01-49-39-073Z_134d6305",
+  "type": "human_playtest",
+  "searchId": "s_20260720_jumpstorm_survivors",
+  "nodeId": "n_0003_pogo_storm_three_beats",
+  "objectiveRevision": 1,
+  "createdAt": "2026-07-21T01:49:39.074Z",
+  "session": {
+    "id": "30b45730-b950-44cf-b7aa-3f69c308cbfa",
+    "durationSeconds": 22.4,
+    "restarts": 0,
+    "completed": false
+  },
+  "ratings": {
+    "fun": 3
+  },
+  "preserve": "",
+  "change": "",
+  "note": "come up with power ups",
+  "telemetry": [
+    {
+      "name": "first_input",
+      "atMs": 3585,
+      "properties": {
+        "method": "primary"
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 3585,
+      "properties": {
+        "kind": "encounter_pattern",
+        "pattern": "skitter",
+        "second": 0
+      }
+    },
+    {
+      "name": "damage",
+      "atMs": 6068,
+      "properties": {
+        "source": "contact",
+        "health": 4,
+        "orbit": 0,
+        "second": 2,
+        "pattern": "skitter"
+      }
+    },
+    {
+      "name": "damage",
+      "atMs": 7734,
+      "properties": {
+        "source": "contact",
+        "health": 3,
+        "orbit": 0,
+        "second": 4,
+        "pattern": "skitter"
+      }
+    },
+    {
+      "name": "goal",
+      "atMs": 7761,
+      "properties": {
+        "kind": "arsenal_growth",
+        "orbit": 1,
+        "cleared": 8,
+        "second": 4
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 8986,
+      "properties": {
+        "kind": "encounter_pattern",
+        "pattern": "hover",
+        "second": 5
+      }
+    },
+    {
+      "name": "damage",
+      "atMs": 11926,
+      "properties": {
+        "source": "contact",
+        "health": 2,
+        "orbit": 1,
+        "second": 8,
+        "pattern": "hover"
+      }
+    },
+    {
+      "name": "damage",
+      "atMs": 13643,
+      "properties": {
+        "source": "contact",
+        "health": 1,
+        "orbit": 1,
+        "second": 10,
+        "pattern": "hover"
+      }
+    },
+    {
+      "name": "goal",
+      "atMs": 13652,
+      "properties": {
+        "kind": "arsenal_growth",
+        "orbit": 2,
+        "cleared": 11,
+        "second": 10
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 14385,
+      "properties": {
+        "kind": "encounter_pattern",
+        "pattern": "charger",
+        "second": 10
+      }
+    },
+    {
+      "name": "damage",
+      "atMs": 17051,
+      "properties": {
+        "source": "rough_landing",
+        "health": 0,
+        "orbit": 2,
+        "second": 13,
+        "pattern": "charger"
+      }
+    },
+    {
+      "name": "death",
+      "atMs": 17051,
+      "properties": {
+        "source": "rough_landing",
+        "cleared": 12,
+        "orbit": 2,
+        "clean_landings": 0
+      }
+    },
+    {
+      "name": "round_end",
+      "atMs": 17051,
+      "properties": {
+        "outcome": "overrun",
+        "cleared": 12,
+        "orbit": 2,
+        "best_streak": 0
+      }
+    },
+    {
+      "name": "run_failed",
+      "atMs": 17051,
+      "properties": {
+        "reason": "swarm_broke_the_bounce"
+      }
+    }
+  ]
+}

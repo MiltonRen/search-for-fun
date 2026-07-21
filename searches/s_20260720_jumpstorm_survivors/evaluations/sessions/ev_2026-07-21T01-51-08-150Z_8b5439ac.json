@@ -1,0 +1,299 @@
+{
+  "schemaVersion": 1,
+  "id": "ev_2026-07-21T01-51-08-150Z_8b5439ac",
+  "type": "human_playtest",
+  "searchId": "s_20260720_jumpstorm_survivors",
+  "nodeId": "n_0005_orbitbound_visible_ring_clamp",
+  "objectiveRevision": 1,
+  "createdAt": "2026-07-21T01:51:08.150Z",
+  "session": {
+    "id": "5770109c-6cae-449f-a349-9a4d7f117331",
+    "durationSeconds": 77,
+    "restarts": 0,
+    "completed": false
+  },
+  "ratings": {
+    "fun": 2
+  },
+  "preserve": "",
+  "change": "",
+  "note": "figure out ways to make this more streamlined and dynamic at the same time",
+  "telemetry": [
+    {
+      "name": "first_input",
+      "atMs": 3723,
+      "properties": {
+        "action": "down",
+        "elapsed_ms": 0
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 3723,
+      "properties": {
+        "kind": "lane_hop",
+        "from_lane": 3,
+        "to_lane": 2,
+        "direction": "in",
+        "airborne_near_enemy": false,
+        "under_clamp": false,
+        "elapsed_s": 0
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 4256,
+      "properties": {
+        "kind": "lane_hop",
+        "from_lane": 2,
+        "to_lane": 1,
+        "direction": "in",
+        "airborne_near_enemy": false,
+        "under_clamp": false,
+        "elapsed_s": 0.5
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 6515,
+      "properties": {
+        "kind": "clamp_warning",
+        "wave": 1,
+        "target_lane": 1,
+        "warning_s": 2.6,
+        "elapsed_s": 2.8
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 9006,
+      "properties": {
+        "kind": "lane_hop",
+        "from_lane": 1,
+        "to_lane": 2,
+        "direction": "out",
+        "airborne_near_enemy": false,
+        "under_clamp": true,
+        "elapsed_s": 5.3
+      }
+    },
+    {
+      "name": "goal",
+      "atMs": 9090,
+      "properties": {
+        "kind": "first_clamp_evaded",
+        "wave": 1,
+        "lane_hops": 3,
+        "pressure_hops": 1,
+        "elapsed_s": 5.4
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 10865,
+      "properties": {
+        "kind": "lane_hop",
+        "from_lane": 2,
+        "to_lane": 1,
+        "direction": "in",
+        "airborne_near_enemy": false,
+        "under_clamp": false,
+        "elapsed_s": 7.1
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 12981,
+      "properties": {
+        "kind": "lane_hop",
+        "from_lane": 1,
+        "to_lane": 2,
+        "direction": "out",
+        "airborne_near_enemy": false,
+        "under_clamp": false,
+        "elapsed_s": 9.3
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 13440,
+      "properties": {
+        "kind": "lane_hop",
+        "from_lane": 2,
+        "to_lane": 3,
+        "direction": "out",
+        "airborne_near_enemy": false,
+        "under_clamp": false,
+        "elapsed_s": 9.7
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 13657,
+      "properties": {
+        "kind": "clamp_warning",
+        "wave": 2,
+        "target_lane": 2,
+        "warning_s": 2.5,
+        "elapsed_s": 9.9
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 13939,
+      "properties": {
+        "kind": "lane_hop",
+        "from_lane": 3,
+        "to_lane": 4,
+        "direction": "out",
+        "airborne_near_enemy": false,
+        "under_clamp": false,
+        "elapsed_s": 10.2
+      }
+    },
+    {
+      "name": "goal",
+      "atMs": 15490,
+      "properties": {
+        "kind": "power_up",
+        "power_level": 2,
+        "source": "pickup",
+        "kills": 10,
+        "elapsed_s": 12
+      }
+    },
+    {
+      "name": "damage",
+      "atMs": 17373,
+      "properties": {
+        "source": "enemy_contact",
+        "health": 3,
+        "elapsed_s": 14,
+        "lane": 4
+      }
+    },
+    {
+      "name": "goal",
+      "atMs": 18365,
+      "properties": {
+        "kind": "power_up",
+        "power_level": 3,
+        "source": "pickup",
+        "kills": 15,
+        "elapsed_s": 15
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 20640,
+      "properties": {
+        "kind": "clamp_warning",
+        "wave": 3,
+        "target_lane": 4,
+        "warning_s": 2.5,
+        "elapsed_s": 16.9
+      }
+    },
+    {
+      "name": "damage",
+      "atMs": 23098,
+      "properties": {
+        "source": "ring_clamp",
+        "health": 2,
+        "wave": 3,
+        "lane": 4,
+        "elapsed_s": 19.4
+      }
+    },
+    {
+      "name": "goal",
+      "atMs": 24055,
+      "properties": {
+        "kind": "power_up",
+        "power_level": 4,
+        "source": "pickup",
+        "kills": 23,
+        "elapsed_s": 20
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 27465,
+      "properties": {
+        "kind": "clamp_warning",
+        "wave": 4,
+        "target_lane": 4,
+        "warning_s": 2.4,
+        "elapsed_s": 23.8
+      }
+    },
+    {
+      "name": "damage",
+      "atMs": 29873,
+      "properties": {
+        "source": "ring_clamp",
+        "health": 1,
+        "wave": 4,
+        "lane": 4,
+        "elapsed_s": 26.2
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 34140,
+      "properties": {
+        "kind": "clamp_warning",
+        "wave": 5,
+        "target_lane": 4,
+        "warning_s": 2.4,
+        "elapsed_s": 30.4
+      }
+    },
+    {
+      "name": "damage",
+      "atMs": 36490,
+      "properties": {
+        "source": "ring_clamp",
+        "health": 0,
+        "wave": 5,
+        "lane": 4,
+        "elapsed_s": 32.8
+      }
+    },
+    {
+      "name": "death",
+      "atMs": 36490,
+      "properties": {
+        "outcome": "overwhelmed",
+        "elapsed_s": 33,
+        "kills": 39,
+        "power_level": 4,
+        "lane_hops": 7,
+        "pressure_hops": 1,
+        "clamps_faced": 5,
+        "clamps_avoided": 2
+      }
+    },
+    {
+      "name": "round_end",
+      "atMs": 36490,
+      "properties": {
+        "outcome": "overwhelmed",
+        "elapsed_s": 33,
+        "kills": 39,
+        "power_level": 4,
+        "lane_hops": 7,
+        "pressure_hops": 1,
+        "clamps_faced": 5,
+        "clamps_avoided": 2
+      }
+    },
+    {
+      "name": "run_failed",
+      "atMs": 36490,
+      "properties": {
+        "reason": "The orbit runner was overwhelmed"
+      }
+    }
+  ]
+}

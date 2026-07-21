@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "id": "n_0009_orbitstorm_visible_evasion_relay",
+  "searchId": "s_20260720_jumpstorm_survivors",
+  "parents": [
+    "n_0007_orbitbound_three_beat_clamp",
+    "n_0006_pogo_storm_power_relay"
+  ],
+  "generation": 3,
+  "edgeType": "crossover",
+  "searchRole": "crossover",
+  "lifecycleStatus": "sealed",
+  "objectiveRevision": 1,
+  "createdAt": "2026-07-21T02:30:41.502Z",
+  "sealedAt": "2026-07-21T02:30:41.502Z",
+  "title": "Orbitstorm: Visible Evasion Relay",
+  "hypothesis": "Making each of the first three successful Pinch, Sweep, and Rake evasions directly unlock Capacitor, Lancer, and Phase Guard will turn readable movement mastery into visible arsenal growth and make the player anticipate the next hazard beat without adding pickups or another input.",
+  "changesFromParents": [
+    "Rendering-only repair of the occluded n_0008 attempt: remove the persistent full-canvas KAPLAY object so immediate-mode lanes, HUD, warnings, and instructions remain visible; mechanics are unchanged.",
+    "Replace Orbitbound's pickup and timed volley growth with an evasion-fed three-step relay: the first three successful hazard clears automatically unlock Capacitor, Lancer, and Phase Guard.",
+    "Translate Pogo's power vocabulary into orbit play: completed radial hops emit Capacitor pulses, Lancer auto-strikes the nearest threat, and Phase Guard converts the next hazard or contact.",
+    "Remove homing and following power pickups entirely; progression is earned only through hazard movement play, with separate hazard and power telemetry."
+  ],
+  "preserve": [
+    "exactly four concentric lanes with left and right orbiting",
+    "up and down 0.38-second radial hops with readable airborne safety",
+    "automatic nearest-target combat and inward-moving threats",
+    "Pinch, Sweep, and Rake warning shapes, order, windows, and early pacing",
+    "four health, a 100-second run, deterministic seed 68420317, and 640 by 640 keyboard play",
+    "one authoritative player with attached halo, body, crest, weapon, and guard visuals",
+    "sparse grayscale geometry with restrained teal hazard and gold relay cues"
+  ],
+  "provenance": {
+    "briefId": "cmd-93298c24-orbitstorm-visible-relay-repair",
+    "report": "Rendering-only repair of the occluded n_0008 attempt. Live QA showed that its authoritative player and enemies moved, but its persistent full-canvas background object covered immediate-mode rings, HUD, warnings, and instructions. This repair removes only that covering object and preserves every mechanical, timing, telemetry, seed, input, and visual-language variable. The design still crosses the two latest 4/5 branches while responding directly to the Pogo note that power-ups do not need to follow the player. The first three successful hazard evasions are the only relay currency, so a clean run exposes Capacitor after Pinch near 3.2 seconds, Lancer after Sweep near 7.4 seconds, and Phase Guard after Rake near 11.4 seconds. Capacitor visibly pulses after completed hops, Lancer visibly draws an automatic strike to a nearby threat, and Phase Guard wraps the player until the next hazard or contact is converted. Hazard warning, first response, evasion, and hit evidence remains variation-specific; power_unlock and first power_trigger evidence stays separate. The smallest useful playtest is whether clearing the first three beats visibly builds an arsenal and increases anticipation of the next movement challenge."
+  },
+  "runtime": {
+    "entry": "game/index.ts",
+    "viewport": {
+      "width": 640,
+      "height": 640
+    },
+    "orientation": "square",
+    "seed": 68420317,
+    "actions": [
+      "left",
+      "right",
+      "up",
+      "down",
+      "restart"
+    ]
+  },
+  "validation": {
+    "schema": "passed",
+    "typecheck": "passed",
+    "bundle": "passed",
+    "boot": "passed",
+    "consoleErrors": 0,
+    "screenshot": "preview.png"
+  }
+}

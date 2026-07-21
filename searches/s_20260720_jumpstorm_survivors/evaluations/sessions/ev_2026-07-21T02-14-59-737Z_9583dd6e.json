@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "id": "ev_2026-07-21T02-14-59-737Z_9583dd6e",
+  "type": "human_playtest",
+  "searchId": "s_20260720_jumpstorm_survivors",
+  "nodeId": "n_0006_pogo_storm_power_relay",
+  "objectiveRevision": 1,
+  "createdAt": "2026-07-21T02:14:59.738Z",
+  "session": {
+    "id": "c40f7c3e-e5a9-4362-92b9-348cb23a50d6",
+    "durationSeconds": 11.3,
+    "restarts": 0,
+    "completed": false
+  },
+  "ratings": {
+    "fun": 4
+  },
+  "preserve": "",
+  "change": "",
+  "note": "No need to have power up follow uplayer",
+  "telemetry": [
+    {
+      "name": "first_input",
+      "atMs": 1361,
+      "properties": {
+        "method": "primary"
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 1362,
+      "properties": {
+        "kind": "encounter_pattern",
+        "pattern": "skitter",
+        "second": 0
+      }
+    },
+    {
+      "name": "power_acquired",
+      "atMs": 3579,
+      "properties": {
+        "power": "capacitor",
+        "count": 1,
+        "second": 2
+      }
+    },
+    {
+      "name": "power_trigger",
+      "atMs": 3579,
+      "properties": {
+        "power": "capacitor",
+        "effect": "wide_landing_wave_armed",
+        "second": 2
+      }
+    },
+    {
+      "name": "decision",
+      "atMs": 6754,
+      "properties": {
+        "kind": "encounter_pattern",
+        "pattern": "hover",
+        "second": 5
+      }
+    },
+    {
+      "name": "power_acquired",
+      "atMs": 8187,
+      "properties": {
+        "power": "lancer",
+        "count": 2,
+        "second": 6
+      }
+    },
+    {
+      "name": "power_trigger",
+      "atMs": 8187,
+      "properties": {
+        "power": "lancer",
+        "effect": "first_auto_strike",
+        "second": 6
+      }
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "id": "n_0011_pogo_storm_surge_battery",
+  "searchId": "s_20260720_jumpstorm_survivors",
+  "parents": [
+    "n_0010_pogo_storm_relay_overdrive"
+  ],
+  "generation": 4,
+  "edgeType": "refine",
+  "searchRole": "refinement",
+  "lifecycleStatus": "sealed",
+  "objectiveRevision": 1,
+  "createdAt": "2026-07-21T03:09:14.412Z",
+  "sealedAt": "2026-07-21T03:09:14.412Z",
+  "title": "Pogo Storm: Surge Battery",
+  "hypothesis": "A self-recovering two-stomp battery plus an explicit 1-to-100 horde ramp with telegraphed surge waves will turn repeated Space presses into a readable timing decision while delivering the requested conspicuous escalation without changing Relay Overdrive's movement or powers.",
+  "changesFromParents": [
+    "Adds a 100-point STOMP battery: valid airborne stomps cost 44, recovery begins after a 0.45-second delay at 24 points per second, and under-cost presses are blocked without changing downward velocity.",
+    "Replaces sparse pattern waves with an exact target curve of 1 + floor(clamp(elapsed / 30, 0, 1) * 99), fast refill toward target, a 125-foe hard cap, and warned surge waves every 6.8 seconds after the first 6.4-second warning."
+  ],
+  "preserve": [
+    "automatic pogo launch and landing loop",
+    "left and right air steering",
+    "direct Capacitor, Lancer, and Phase unlocks at 1.7, 5.7, and 9.7 seconds",
+    "Capacitor landing wave and echo, triple-target Lancer, and rechargeable Phase contact conversion",
+    "five health",
+    "skitter, hover, and charger threat vocabulary",
+    "84-second run and deterministic seed 1729031",
+    "640 by 640 keyboard play",
+    "sparse grayscale geometry with one gold accent",
+    "one authoritative player with attached body, halo, spring, boot, guide, guard, and weapon visuals"
+  ],
+  "provenance": {
+    "briefId": "cmd-d6f0242d-pogo-horde-energy",
+    "report": "Responds narrowly to the latest 4/5, 59.7-second feedback. STOMP starts full at 100. A valid airborne primary spend costs 44, pauses regeneration for 0.45 seconds, then regenerates at 24 per second; an under-cost press leaves velocity untouched, gives restrained EMPTY/RECOVER feedback, and emits throttled blocked telemetry. The compact bar has a visible cost marker and CHARGED, READY, SPENT, RECOVER, and EMPTY states. Horde target is exactly 1 at start, 34 at 10 seconds, 67 at 20, and 100 at 30, then holds. A refill budget of 8 + target times 0.20 foes per second restores kills toward target. Starting at 6.4 seconds, a 0.9-second warning precedes surges every 6.8 seconds; each adds min(22, 8 + floor(elapsed / 3)) foes above target under a 125 cap. Surge composition cycles the preserved skitter, hover, and charger patterns. Sparse ramp checkpoints, surge warning/release, energy spend, and throttled energy-block events expose the requested measurements. No pickups, followers, menus, assets, dependencies, or runtime integrations are added."
+  },
+  "runtime": {
+    "entry": "game/index.ts",
+    "viewport": {
+      "width": 640,
+      "height": 640
+    },
+    "orientation": "square",
+    "seed": 1729031,
+    "actions": [
+      "left",
+      "right",
+      "primary",
+      "restart"
+    ]
+  },
+  "validation": {
+    "schema": "passed",
+    "typecheck": "passed",
+    "bundle": "passed",
+    "boot": "passed",
+    "consoleErrors": 0,
+    "screenshot": "preview.png"
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "id": "n_0010_pogo_storm_relay_overdrive",
+  "searchId": "s_20260720_jumpstorm_survivors",
+  "parents": [
+    "n_0006_pogo_storm_power_relay"
+  ],
+  "generation": 3,
+  "edgeType": "refine",
+  "searchRole": "refinement",
+  "lifecycleStatus": "sealed",
+  "objectiveRevision": 1,
+  "createdAt": "2026-07-21T02:51:40.609Z",
+  "sealedAt": "2026-07-21T02:51:40.609Z",
+  "title": "Pogo Storm: Relay Overdrive",
+  "hypothesis": "Igniting three dramatic power stages directly on a fixed early schedule will make Pogo Storm feel like an escalating screen-clearing survivor engine without interrupting or replacing its launch, steering, and stomp-timing loop.",
+  "changesFromParents": [
+    "Remove homing, following, and collectible power actors; Capacitor, Lancer, and Phase Overdrive ignite directly at 1.7, 5.7, and 9.7 seconds.",
+    "Amplify Capacitor into a large landing wave with a delayed echo, Lancer into a three-target chain strike, and Phase Guard into a large contact-conversion detonation with a restrained 6.5-second recharge.",
+    "Replace acquisition telemetry with power_unlock while retaining a separate first meaningful power_trigger event that only fires when the effect clears or converts threats."
+  ],
+  "preserve": [
+    "automatic launch-and-land pogo arcs",
+    "left and right air steering with primary stomp timing",
+    "landing shockwaves and five-health contact or rough-landing pressure",
+    "the repeating skitter, hover, and telegraphed charger encounter beats with approximate density",
+    "an 84-second run and deterministic seed 1729031",
+    "640 by 640 keyboard play",
+    "sparse grayscale geometry with one restrained gold accent",
+    "one authoritative player with attached body, halo, spring, boot, guard, guide, and weapon visuals"
+  ],
+  "provenance": {
+    "briefId": "cmd-9f687968-pogo-relay-overdrive",
+    "report": "Responds narrowly to the 4/5, 11.3-second note that the power-up does not need to follow the player. There are no power actors or pickup collision paths. Capacitor ignites at 1.7 seconds and makes the next landing visibly wider before a delayed echo expands farther; Lancer ignites at 5.7 seconds and chains through up to three nearest threats every 1.28 seconds; Phase Overdrive ignites at 9.7 seconds and remains visibly charged until contact becomes a 132-pixel crushing detonation, then recharges after 6.5 seconds. The three direct unlocks are exposed before second 10 while the original bounce physics, stomp judgment, health pressure, encounter timing, seed, viewport, and visual language remain controlled. power_unlock records exposure, power_trigger records first meaningful use with cleared count, and existing first-input, encounter, stomp, damage, death, goal, and round-end evidence remains available. The smallest useful playtest is whether the escalating relay feels dramatically more powerful and screen-clearing by second 11 without making pogo timing irrelevant."
+  },
+  "runtime": {
+    "entry": "game/index.ts",
+    "viewport": {
+      "width": 640,
+      "height": 640
+    },
+    "orientation": "square",
+    "seed": 1729031,
+    "actions": [
+      "left",
+      "right",
+      "primary",
+      "restart"
+    ]
+  },
+  "validation": {
+    "schema": "passed",
+    "typecheck": "passed",
+    "bundle": "passed",
+    "boot": "passed",
+    "consoleErrors": 0,
+    "screenshot": "preview.png"
+  }
+}

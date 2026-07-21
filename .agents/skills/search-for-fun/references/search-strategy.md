@@ -1,6 +1,6 @@
 # Search strategy
 
-Use these principles to choose experiments. `INSIGHT.md` remains the raw source transcript; this is the operational version.
+Use these principles to choose experiments. This is the operational version.
 
 ## 1. Trade accuracy for speed deliberately
 

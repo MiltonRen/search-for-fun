@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "cmd_2026-07-21T02-57-44-548Z_d6f0242d",
+  "type": "expand",
+  "searchId": "s_20260720_jumpstorm_survivors",
+  "nodeIds": [
+    "n_0010_pogo_storm_relay_overdrive"
+  ],
+  "mode": "single",
+  "instruction": "optimize per my feedback",
+  "createdAt": "2026-07-21T02:57:44.548Z",
+  "createdBy": "studio",
+  "status": "processed",
+  "result": {
+    "completedAt": "2026-07-21T03:13:28.178Z",
+    "nodeIds": [
+      "n_0011_pogo_storm_surge_battery"
+    ],
+    "summary": "Imported and live-verified Pogo Storm: Surge Battery. Added a visible 100-point auto-recovering stomp battery that blocks under-cost spam, an exact 1-to-100 target horde ramp over 30 seconds, and periodic warned surge releases under a 125-foe cap. Two-direction attachment motion, restart, energy depletion/recovery, two surge releases, near-target peak population, boot capture, failure stability, and zero console errors passed."
+  }
+}
