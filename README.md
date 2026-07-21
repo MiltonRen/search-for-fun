@@ -1,4 +1,4 @@
-# Search-for-fun
+![alt text](/cover.png "Logo")
 
 Search-for-fun is a local-first game-design search studio for Codex and KAPLAY. It turns one idea into a durable graph of small playable hypotheses, keeps every sealed branch in the repository, records playtest evidence, and queues explicit next moves for Codex.
 

@@ -22,6 +22,108 @@ html, body, #root { width: 100%; min-width: 320px; height: 100%; margin: 0; }
 
 body { overflow: hidden; background: #0a0a0b; }
 
+/* Standalone explanation of the search-for-fun development model. */
+.search-story {
+  position: relative;
+  display: grid;
+  width: 100%;
+  height: 100%;
+  place-items: center;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 48% 48%, rgba(255, 255, 255, 0.035), transparent 39rem),
+    #20211f;
+  cursor: pointer;
+  isolation: isolate;
+}
+
+.story-ambient {
+  position: absolute;
+  inset: -25%;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 20% 54%, rgba(85, 217, 155, 0.06), transparent 25%),
+    radial-gradient(circle at 57% 48%, rgba(240, 207, 100, 0.045), transparent 24%),
+    radial-gradient(circle at 90% 46%, rgba(255, 107, 53, 0.055), transparent 24%);
+  filter: blur(28px);
+  animation: story-breathe 6s ease-in-out infinite alternate;
+}
+
+.story-frame { position: relative; width: min(100vw, calc(100vh * 16 / 9)); aspect-ratio: 16 / 9; }
+.story-stages {
+  position: absolute;
+  z-index: 2;
+  top: 5.2%;
+  left: 3.5%;
+  right: 3.5%;
+  height: 1rem;
+  pointer-events: none;
+}
+.story-stages span {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: rgba(255, 255, 255, 0.52);
+  font: 700 clamp(0.68rem, 1.15vw, 0.82rem)/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.story-stage-origin { position: absolute; top: 0; right: 58%; left: 0; display: flex; align-items: center; gap: 16px; }
+.story-stages span:not(.story-stage-heading)::after { width: 100%; height: 1px; background: currentColor; content: ""; opacity: 0.25; }
+.story-stages .story-stage-heading { flex: 0 0 auto; color: rgba(255, 255, 255, 0.5); font-weight: 600; }
+.story-stages .story-stage-early { flex: 1 1 auto; color: rgba(85, 217, 155, 0.78); }
+.story-stages .story-stage-middle { position: absolute; top: 0; right: 34%; left: 42%; color: rgba(240, 207, 100, 0.78); }
+.story-stages .story-stage-late { position: absolute; top: 0; right: 0; left: 66%; color: rgba(255, 132, 62, 0.82); }
+.story-scene { display: block; width: 100%; height: 100%; animation: story-scene-life 5.6s ease both; }
+.story-scene-search { animation-duration: 7.6s; }
+.story-scene path, .story-scene line { vector-effect: non-scaling-stroke; }
+
+.story-ghost-path {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.055);
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.story-linear-path {
+  fill: none;
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: story-linear-draw 3.3s linear 0.22s forwards;
+}
+
+.story-edge {
+  stroke-width: 7;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: story-edge-draw 0.72s cubic-bezier(0.28, 0.04, 0.18, 1) var(--delay) forwards;
+}
+
+.story-path-glow { opacity: 0.22; stroke-width: 20; }
+.story-node { opacity: 0; transform: scale(0.2); transform-box: fill-box; transform-origin: center; animation: story-node-arrive 0.42s cubic-bezier(0.18, 0.85, 0.3, 1.35) var(--delay) forwards; }
+.story-scene-linear .story-node { animation-duration: 0.28s; }
+.story-node-halo { fill: rgba(255, 255, 255, 0.09); }
+.story-node-core { fill: #f7f6f1; stroke: rgba(10, 10, 11, 0.38); stroke-width: 1.5; }
+
+@keyframes story-linear-draw { to { stroke-dashoffset: 0; } }
+@keyframes story-edge-draw { to { stroke-dashoffset: 0; } }
+@keyframes story-node-arrive { 68% { opacity: 1; transform: scale(1.12); } 100% { opacity: 1; transform: scale(1); } }
+@keyframes story-scene-life { 0% { opacity: 0; transform: scale(0.985); } 7%, 86% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(1.008); } }
+@keyframes story-breathe { from { opacity: 0.72; transform: scale(0.98); } to { opacity: 1; transform: scale(1.02); } }
+
+@media (max-aspect-ratio: 4 / 5) {
+  .story-frame { width: 126vw; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story-ambient, .story-scene, .story-linear-path, .story-edge, .story-node { animation-duration: 1ms; animation-delay: 0s; }
+}
+
 button, input, textarea, select { font: inherit; }
 button, select { color: inherit; }
 button, a, select, input, textarea, summary { -webkit-tap-highlight-color: transparent; }
